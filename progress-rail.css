@@ -1,0 +1,16 @@
+/* 紧凑轨道保留全程位置，章节节点和细线把阅读进度接回内容。 */
+svg.story-route.story-progress-rail{position:fixed;inset:auto;top:var(--rail-top,200px);left:clamp(8px,8vw,118px);width:64px;height:var(--rail-height,320px);z-index:4;overflow:visible;pointer-events:none;transform:none!important;contain:layout style;transition:none;opacity:0}
+.story-progress-rail #storyRouteBase{stroke:#c8beb1;stroke-width:1;fill:none}
+.story-progress-rail #storyRouteProgress{stroke:#cf765c;stroke-width:1.6;fill:none}
+.story-progress-rail .story-branches{display:inline}
+.story-progress-rail .story-live-tether{display:none}
+.story-progress-label{fill:#8a7b6d;font:10px Consolas,'Courier New',monospace;letter-spacing:.04em}
+.story-chapter .story-anchor{visibility:hidden}
+.story-progress-rail foreignObject{transform:scale(.65);transform-origin:0 0}
+.story-progress-rail .story-guide-spheres{transform:none}
+.rail-page-link{fill:none;stroke:#b3a18c;stroke-width:1;vector-effect:non-scaling-stroke;opacity:0}
+.rail-page-end{fill:#b3a18c;opacity:0}
+.rail-chapter-node{fill:#eee7dc;stroke:#9a8a78;stroke-width:1;opacity:calc(.38 + var(--node-active,0)*.62)}
+.rail-chapter-name{fill:#827365;font:12px 'Microsoft YaHei',sans-serif;letter-spacing:.12em;opacity:0}
+@media(max-width:640px){svg.story-route.story-progress-rail{left:-6px}.story-progress-rail foreignObject{transform:scale(.53)}.rail-page-link{stroke-width:.7}.rail-chapter-name{font-size:11px}}
+html.story-detail-open .story-progress-rail{visibility:hidden}

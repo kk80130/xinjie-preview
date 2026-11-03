@@ -1,0 +1,4 @@
+.sound-credit { display:block;margin-top:10px;font:10px/1.5 Consolas,'Microsoft YaHei',monospace;color:#847b70; }
+.sound-credit a { color:inherit;text-underline-offset:3px; }
+/* 历史消息已呈现过，后续重绘只让新到达的内容入场。 */
+#experience .message-row:not(.is-new),#experience .transaction-slip:not(.is-new) { animation:none; }

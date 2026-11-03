@@ -1,0 +1,475 @@
+/* 游戏布局集中在本文件，固定操作区与可滚动历史各自占用明确的网格轨道。 */
+#home #experience {
+  --match-accent: #cf765c;
+  --match-radius: 20px;
+  --match-speed: 340ms;
+  --match-paper: #faf8f4;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  padding: 0;
+}
+#home #experience[data-skin="cool"] {
+  --match-accent: #6b8790;
+  --match-radius: 5px;
+  --match-speed: 190ms;
+}
+html.is-playing-match,
+html.is-playing-match body,
+html.is-preparing-match,
+html.is-preparing-match body { overflow: hidden; overscroll-behavior: none; }
+html.is-playing-match,
+html.is-preparing-match { scrollbar-gutter: auto; }
+html.is-playing-match .topbar,
+html.is-preparing-match .topbar { visibility: hidden; pointer-events: none; }
+html.is-playing-match #home,
+html.is-preparing-match #home { position: relative; z-index: 200; }
+#home[data-mode="playing"] #experience {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  width: auto;
+  max-width: none;
+  height: 100dvh;
+  margin: 0;
+  padding: 12px;
+  background: var(--shell, #eee7dc);
+}
+#home #experience[hidden] { display: none; }
+#home #experience .chat-stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  max-height: none;
+  overflow: hidden;
+  border: 1px solid var(--line-strong, #cdbfae);
+  border-radius: var(--match-radius);
+  background: var(--match-paper);
+  box-shadow: none;
+}
+#home #experience button {
+  min-width: 0;
+  min-height: 44px;
+  max-width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--line-strong, #cdbfae);
+  background: transparent;
+  color: var(--ink, #2d2925);
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+#home #experience button:focus-visible,
+#home #experience summary:focus-visible {
+  outline: 2px solid var(--match-accent);
+  outline-offset: 3px;
+}
+#home #experience button[aria-pressed="true"] {
+  border-color: var(--match-accent);
+  background: color-mix(in srgb, var(--match-accent) 9%, var(--match-paper));
+  box-shadow: inset 0 -3px var(--match-accent);
+}
+#home #experience button:active { background: color-mix(in srgb, var(--match-accent) 15%, var(--match-paper)); }
+#home #experience .primary-action {
+  min-width: 130px;
+  background: var(--ink, #2d2925);
+  color: #faf8f4;
+  border-radius: 5px var(--match-radius) 5px 5px;
+}
+#home #experience .secondary-action { border-color: transparent; font-size: 13px; }
+#home #experience svg {
+  flex: 0 0 auto;
+  width: 60px;
+  height: 60px;
+  fill: none;
+  stroke: var(--match-accent);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* 顶部只有联系人、交易进度和公开钱包，离开对局始终可达。 */
+#home #experience .chat-header {
+  grid-column: 1 / -1;
+  gap: 12px;
+  min-height: 70px;
+  padding: 12px 20px;
+  border-bottom: 0;
+  box-shadow: none;
+}
+#home #experience [data-match-home] {
+  flex: 0 0 42px;
+  width: 42px;
+  min-height: 42px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 21px;
+}
+#home #experience .contact-copy { min-width: 0; }
+#home #experience .contact-copy strong { font-size: 15px; }
+#home #experience .contact-copy span { font-size: 11px; }
+#home #experience .deal-dots {
+  display: flex;
+  gap: 8px;
+  margin: 0 3px 0 auto;
+  padding: 0;
+  list-style: none;
+}
+#home #experience .deal-dots li {
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--match-accent);
+  border-radius: 50%;
+}
+#home #experience .deal-dots .is-done { background: color-mix(in srgb, var(--match-accent) 45%, transparent); }
+#home #experience .deal-dots .is-active {
+  background: var(--match-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--match-accent) 13%, transparent);
+}
+#home #experience .match-scoreboard {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 36px;
+  padding: 7px 20px;
+  border-block: 1px solid var(--line, #d9cfc1);
+  font: 11px var(--data-font, monospace);
+}
+#home #experience .match-scoreboard[hidden] { display: none; }
+#home #experience .status-role { margin-right: auto; color: var(--muted, #81766b); }
+#home #experience .match-scoreboard b { font-size: 14px; font-weight: 600; }
+#home #experience .status-multiplier {
+  padding: 2px 7px;
+  border-radius: 30px;
+  background: var(--ink);
+  color: var(--match-paper);
+}
+
+/* 历史消息独立滚动，当前物品不跟着历史离开视口。 */
+#home #experience .stage-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  max-height: none;
+  padding: 0;
+  overflow: hidden;
+}
+#home #experience .message-list {
+  flex: 1 1 0;
+  justify-content: flex-start;
+  min-height: 0;
+  gap: 12px;
+  padding: 24px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+#home #experience .message-list > :first-child { margin-top: auto; }
+#home #experience .message-list > * { flex: 0 0 auto; }
+#home #experience .message-bubble {
+  max-width: min(86%, 580px);
+  padding: 11px 15px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+#home #experience .message-row.is-new { animation-duration: var(--match-speed); animation-delay: 0ms; }
+#home #experience .transaction-slip {
+  width: min(340px, 88%);
+  padding: 13px 22px;
+  gap: 4px;
+}
+#home #experience .transaction-slip strong { font-size: 26px; }
+#home #experience .transaction-slip.is-new { animation-duration: 420ms; animation-delay: 0ms; }
+#home #experience .deal-panel { flex: 0 0 auto; margin: 0; padding: 0 24px 24px; }
+#home #experience .deal-panel:empty { display: none; }
+#home #experience .chat-stage[data-phase="offer"][data-actor="player"] .message-list { display: none; }
+#home #experience .chat-stage[data-phase="offer"][data-actor="player"] .stage-content { justify-content: center; }
+#home #experience .match-object {
+  display: flex;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid var(--line-strong, #cdbfae);
+  border-left: 3px solid var(--match-accent);
+  border-radius: 4px var(--match-radius) 4px 4px;
+  background: var(--match-paper);
+}
+#home #experience .match-object > div { min-width: 0; flex: 1; }
+#home #experience .match-object small { font-size: 10px; color: var(--muted); }
+#home #experience .match-object h3 { margin: 6px 0; font-size: 22px; line-height: 1.35; }
+#home #experience .match-object p { margin: 5px 0 10px; font-size: 13px; line-height: 1.6; }
+#home #experience .price { margin-left: 12px; font: 21px var(--data-font, monospace); }
+#home #experience .level-marks { display: inline-flex; align-items: center; gap: 5px; min-height: 16px; vertical-align: middle; }
+#home #experience .level-marks i { display: block; width: 11px; height: 11px; border: 1px solid var(--match-accent); border-radius: 50%; }
+#home #experience .level-marks.truth i { width: 7px; height: 7px; background: var(--match-accent); }
+#home #experience .truth-face { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--match-accent); }
+#home #experience .truth-face b { margin-left: 10px; font-size: 12px; }
+#home #experience .truth-face p { margin-bottom: 0; }
+#home #experience .seller-claim-preview { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line-strong); }
+
+/* 操作轨道由内容撑开，不缩小、不滚动、不把按钮藏在裁剪区里。 */
+#home #experience .stage-controls {
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 0;
+  max-height: none;
+  padding: 12px max(24px, calc((100% - 1120px) / 2));
+  overflow: visible;
+  border-top: 1px solid var(--line-strong, #cdbfae);
+  background: color-mix(in srgb, var(--shell, #eee7dc) 35%, var(--match-paper));
+}
+#home #experience .control-utility,
+#home #experience .response-tools,
+#home #experience .single-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+#home #experience .control-title { margin: 0; font-size: 13px; }
+#home #experience .match-help-button {
+  flex: 0 0 36px;
+  width: 36px;
+  min-height: 36px;
+  padding: 0;
+  border-radius: 50%;
+  font: 600 15px var(--data-font, monospace);
+}
+#home #experience .response-tools .match-help-button { margin-left: auto; }
+#home #experience .match-wait { padding: 0; margin: 0; font-size: 13px; color: var(--muted); }
+#home #experience .single-action .match-help-button { margin-right: auto; }
+#home #experience .response-clock { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px; margin: 0; font-size: 11px; }
+#home #experience .response-clock strong { font: 13px var(--data-font, monospace); }
+#home #experience progress { display: block; width: 100%; height: 3px; border: 0; accent-color: var(--match-accent); }
+#home #experience .haggle-action { width: auto; min-height: 36px; margin: 0; padding: 7px 16px; border-style: dashed; border-radius: 30px; font-size: 12px; }
+#home #experience .match-actions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+#home #experience .match-actions:has(> :only-child) { grid-template-columns: minmax(0, 1fr); }
+#home #experience .match-actions button { position: relative; min-height: 56px; border-radius: 4px var(--match-radius) 4px 4px; font-size: 14px; }
+#home #experience [data-action="accept"] { background: var(--ink); color: var(--match-paper); }
+#home #experience [data-action="challenge"] { border-left: 3px double var(--match-accent); border-radius: var(--match-radius) 4px 4px 4px; }
+#home #experience [data-action="raise"] { border-top: 3px double var(--match-accent); border-radius: 4px var(--match-radius) 4px var(--match-radius); }
+#home #experience [data-action="fold"] { border-style: dashed; border-radius: 3px; }
+#home #experience [data-first-hint]::after {
+  position: absolute;
+  right: 6px;
+  bottom: calc(100% + 6px);
+  padding: 6px 9px;
+  border-radius: 12px 12px 2px 12px;
+  background: var(--ink);
+  color: var(--match-paper);
+  content: attr(data-first-hint);
+  font-size: 10px;
+  line-height: 1.3;
+  white-space: nowrap;
+  pointer-events: none;
+}
+#home #experience .object-hand { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+#home #experience .object-hand button { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 14px 10px; border-radius: var(--match-radius) 4px 4px 4px; text-align: left; }
+#home #experience .object-hand svg { width: 42px; height: 42px; }
+#home #experience .object-hand b { font-size: 13px; line-height: 1.4; }
+#home #experience .object-hand small { font-size: 11px; line-height: 1.5; color: var(--muted); }
+#home #experience .claim-picker { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; border: 0; min-width: 0; }
+#home #experience .claim-picker legend { margin-bottom: 10px; padding: 0; font-size: 12px; }
+#home #experience .claim-picker button { position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 8px; min-height: 76px; padding: 12px 9px; text-align: left; }
+#home #experience .claim-picker b { font-size: 12px; font-weight: 500; white-space: nowrap; }
+#home #experience .claim-price { color: var(--muted); font: 10px var(--data-font, monospace); white-space: nowrap; }
+#home #experience .claim-picker em { position: absolute; right: 5px; top: 5px; font-style: normal; font-size: 9px; color: #a65d48; }
+
+/* 准备页是单独的居中卡片，所有选项同屏展示。 */
+#home[data-mode="briefing"] .attraction-hero { justify-content: center; gap: 0; padding: 36px 16px 70px; }
+#home[data-mode="briefing"] .hero-copy { display: none; }
+#home[data-mode="briefing"] #experience { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; width: auto; max-width: none; height: 100dvh; padding: 16px; background: var(--shell, #eee7dc); }
+#home[data-mode="briefing"] #experience .chat-stage { display: block; width: min(640px, 100%); height: auto; overflow: visible; box-shadow: 0 24px 70px #54493c17; }
+#home[data-mode="briefing"] #experience .chat-header { display: none; }
+#home[data-mode="briefing"] #experience .stage-content { padding: 30px 30px 12px; overflow: visible; }
+#home[data-mode="briefing"] #experience .stage-controls { padding: 12px 30px 26px; border: 0; background: transparent; }
+#home #experience .launch-screen { display: grid; justify-items: stretch; gap: 22px; min-height: 0; padding: 0; text-align: left; background: none; }
+#home #experience .launch-kicker { margin: 0; color: var(--muted); font: 10px var(--data-font, monospace); letter-spacing: .1em; }
+#home #experience .launch-screen h2 { max-width: none; margin: 0; font-size: 31px; line-height: 1.35; letter-spacing: -.03em; }
+#home #experience .match-picker { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; min-width: 0; margin: 0; padding: 0; border: 0; }
+#home #experience .match-picker legend { margin-bottom: 10px; font-size: 12px; }
+#home #experience .match-picker button { min-width: 0; padding: 14px 10px; text-align: left; border-radius: var(--match-radius) 4px 4px 4px; }
+#home #experience .match-picker b { display: block; margin-bottom: 7px; font-size: 16px; white-space: nowrap; }
+#home #experience .match-picker span { display: block; color: var(--muted); font-size: 11px; line-height: 1.6; }
+#home #experience .traits b { font-size: 14px; }
+#home #experience .traits span { white-space: nowrap; }
+
+/* 规则独立打开；计时由脚本暂停，原生对话框处理焦点与 Escape 返回。 */
+#home #experience .match-help-card {
+  position: fixed;
+  inset: 0;
+  width: min(440px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 22px;
+  border: 1px solid var(--match-accent);
+  border-radius: 5px 22px 5px 5px;
+  background: var(--match-paper);
+  color: var(--ink);
+  box-shadow: 0 18px 55px #2d29252b;
+}
+#home #experience .match-help-card::backdrop { background: #2d29253d; }
+#home #experience .match-help-card header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+#home #experience .match-help-card header button { width: 36px; min-height: 36px; padding: 0; border: 0; font-size: 22px; }
+#home #experience .match-help-card ol { display: grid; gap: 10px; margin: 0; padding-left: 22px; font-size: 12px; line-height: 1.6; }
+
+/* 复盘内容可滚动，重开按钮在独立底栏内始终可见。 */
+#home #experience .chat-stage[data-phase="finished"] { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto minmax(0, 1fr) auto; }
+#home #experience .chat-stage[data-phase="finished"] .stage-content { display: block; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+#home #experience .chat-stage[data-phase="finished"] .deal-panel { max-width: 1120px; margin: 0 auto; padding: 28px; }
+#home #experience .chat-stage[data-phase="finished"] .stage-controls { grid-column: 1 / -1; min-height: 72px; border-left: 0; border-top: 1px solid var(--line); padding: 12px 28px; }
+#home #experience .result-screen { display: block; max-width: none; padding: 0; background: none; }
+#home #experience .result-screen h2 { margin: 10px 0 20px; font-size: 32px; line-height: 1.3; }
+#home #experience .result-screen h3 { margin: 22px 0 10px; font-size: 16px; }
+#home #experience .match-totals { display: flex; flex-wrap: wrap; gap: 24px; padding: 16px 0; border-block: 1px solid var(--line); }
+#home #experience .match-totals span { font-size: 11px; color: var(--muted); }
+#home #experience .match-totals strong { display: block; margin-top: 6px; font: 26px var(--data-font, monospace); color: var(--ink); }
+#home #experience .match-review details { padding: 8px 0; border-bottom: 1px solid var(--line); }
+#home #experience .match-review summary { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; min-height: 44px; font-size: 13px; cursor: pointer; }
+#home #experience .match-review b { font-size: 11px; font-weight: 400; color: #a36c52; }
+#home #experience .match-review p,
+#home #experience .tell-note p { font-size: 12px; line-height: 1.6; }
+#home #experience .review-levels { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; }
+#home #experience .review-levels .level-marks { margin-right: 7px; }
+#home #experience .tell-note { margin-top: 22px; padding: 4px 16px 16px; border: 1px solid var(--line); }
+#home #experience .tell-note small { color: var(--muted); font-size: 11px; }
+
+@media (min-width: 961px) {
+  #home #experience .message-list { padding-inline: max(24px, calc((100% - 1120px) / 2)); }
+  #home #experience .deal-panel { padding: 0 max(24px, calc((100% - 1120px) / 2)) 16px; }
+  #home #experience .object-hand button { display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; align-items: center; gap: 4px 10px; padding: 10px 14px; }
+  #home #experience .object-hand svg { grid-row: 1 / 3; width: 36px; height: 36px; }
+  #home #experience .object-hand small { grid-column: 2 / -1; }
+  #home #experience .claim-picker button { flex-direction: row; align-items: center; gap: 12px; min-height: 46px; padding: 10px 14px; }
+  #home #experience .claim-picker .claim-price { margin-left: auto; }
+}
+@media (max-width: 960px) {
+  #home[data-mode="playing"] #experience { padding: 8px; }
+  #home #experience .stage-controls { gap: 10px; padding: 12px 18px; }
+  #home #experience .match-actions { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  #home #experience .match-actions button { min-height: 44px; font-size: 13px; }
+  #home #experience .object-hand button { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 4px 8px; padding: 10px; }
+  #home #experience .object-hand svg { grid-row: 1 / 4; width: 34px; height: 34px; }
+  #home #experience .object-hand small { font-size: 10px; }
+  #home #experience .claim-picker button { flex-direction: row; align-items: center; gap: 8px; min-height: 44px; }
+}
+@media (max-width: 600px) {
+  #home[data-mode="playing"] #experience { padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px); }
+  #home #experience .chat-stage { border-radius: 0; border-inline: 0; }
+  #home #experience .chat-header { min-height: 54px; gap: 9px; padding: 7px 12px; }
+  #home #experience .contact-avatar { display: none; }
+  #home #experience .contact-copy strong { font-size: 14px; }
+  #home #experience .contact-copy span { font-size: 10px; }
+  #home #experience [data-match-home] { flex-basis: 36px; width: 36px; min-height: 36px; font-size: 19px; }
+  #home #experience .deal-dots { gap: 6px; }
+  #home #experience .deal-dots li { width: 7px; height: 7px; }
+  #home #experience .match-scoreboard { min-height: 30px; padding: 6px 12px; gap: 12px; font-size: 10px; }
+  #home #experience .match-scoreboard b { font-size: 12px; }
+  #home #experience .message-list { gap: 8px; padding: 14px 12px; }
+  #home #experience .message-bubble { max-width: 92%; padding: 8px 11px; font-size: 12px; line-height: 1.55; }
+  #home #experience .transaction-slip { padding: 9px 18px; font-size: 10px; }
+  #home #experience .transaction-slip strong { font-size: 22px; }
+  #home #experience .deal-panel { padding: 0 12px 12px; }
+  #home #experience .match-object { gap: 10px; padding: 12px; }
+  #home #experience .match-object svg { width: 38px; height: 38px; }
+  #home #experience .match-object h3 { margin: 3px 0; font-size: 17px; }
+  #home #experience .match-object p { margin: 4px 0 6px; font-size: 11px; line-height: 1.5; }
+  #home #experience .price { font-size: 17px; }
+  #home #experience .truth-face { margin-top: 7px; padding-top: 6px; }
+  #home #experience .seller-claim-preview { margin-top: 7px; padding-top: 6px; }
+  #home #experience .stage-controls { gap: 8px; padding: 10px 12px; }
+  #home #experience .match-help-button { width: 32px; flex-basis: 32px; min-height: 32px; }
+  #home #experience .match-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+  #home #experience .match-actions button { min-height: 44px; padding: 9px; font-size: 13px; }
+  #home #experience .response-tools .haggle-action { min-height: 32px; padding-block: 5px; }
+  #home #experience .object-hand { gap: 6px; }
+  #home #experience .object-hand button { display: flex; gap: 5px; padding: 9px 7px; }
+  #home #experience .object-hand svg { width: 32px; height: 32px; }
+  #home #experience .object-hand b { font-size: 11px; }
+  #home #experience .object-hand small { font-size: 10px; line-height: 1.4; }
+  #home #experience .claim-picker { gap: 6px; }
+  #home #experience .claim-picker legend { margin-bottom: 7px; font-size: 11px; }
+  #home #experience .claim-picker button { flex-direction: column; align-items: flex-start; min-height: 58px; padding: 9px 7px; gap: 7px; }
+  #home #experience .claim-picker b { font-size: 11px; }
+  #home #experience .level-marks { gap: 4px; }
+  #home #experience .level-marks i { width: 9px; height: 9px; }
+  #home #experience .control-title { font-size: 12px; }
+  #home #experience .launch-screen { gap: 16px; }
+  #home #experience .launch-screen h2 { font-size: clamp(22px, 6.2vw, 29px); }
+  #home[data-mode="briefing"] .attraction-hero { padding: 18px 10px 48px; }
+  #home[data-mode="briefing"] #experience { padding: 12px; }
+  #home[data-mode="briefing"] #experience .chat-stage { border: 1px solid var(--line-strong); border-radius: var(--match-radius); }
+  #home[data-mode="briefing"] #experience .stage-content { padding: 24px 14px 12px; }
+  #home[data-mode="briefing"] #experience .stage-controls { padding: 10px 14px 22px; }
+  #home #experience .match-picker { gap: 6px; }
+  #home #experience .match-picker button { padding: 12px 7px; }
+  #home #experience .match-picker b { font-size: 14px; }
+  #home #experience .match-picker span { font-size: 10px; line-height: 1.5; }
+  #home #experience .traits b { font-size: 12px; }
+  #home #experience .traits span { font-size: 9px; }
+  #home #experience .chat-stage[data-phase="finished"] .deal-panel { padding: 20px 14px; }
+  #home #experience .chat-stage[data-phase="finished"] .stage-controls { min-height: 64px; padding: 10px 14px; }
+  #home #experience .result-screen h2 { font-size: 26px; }
+  #home #experience .match-totals { gap: 16px; }
+  #home #experience .match-totals strong { font-size: 23px; }
+}
+@media (max-height: 640px) and (min-width: 601px) {
+  #home[data-mode="playing"] #experience { padding: 6px; }
+  #home #experience .chat-header { min-height: 50px; padding-block: 5px; }
+  #home #experience .contact-avatar { display: none; }
+  #home #experience .stage-controls { gap: 6px; padding: 8px 16px; }
+  #home #experience .match-actions { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  #home #experience .object-hand button { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 3px 7px; padding: 7px 9px; }
+  #home #experience .object-hand svg { grid-row: 1 / 3; width: 26px; height: 26px; }
+  #home #experience .object-hand small { grid-column: 2 / -1; }
+  #home #experience .object-hand small { font-size: 10px; }
+  #home #experience .claim-picker button { min-height: 40px; flex-direction: row; align-items: center; gap: 7px; padding: 7px 9px; }
+  #home #experience .claim-picker b { font-size: 11px; }
+  #home #experience .claim-picker legend { margin-bottom: 6px; }
+  #home #experience .message-list { padding: 12px 16px; }
+  #home #experience .deal-panel { padding: 0 16px 12px; }
+  #home #experience .match-object { gap: 10px; padding: 12px; }
+  #home #experience .match-object svg { width: 36px; height: 36px; }
+  #home #experience .match-object h3 { font-size: 18px; margin: 3px 0; }
+  #home #experience .match-object p { font-size: 11px; margin-block: 4px; }
+  #home[data-mode="briefing"] #experience .stage-content { padding: 18px 22px 10px; }
+  #home[data-mode="briefing"] #experience .stage-controls { padding: 8px 22px 18px; }
+  #home[data-mode="briefing"] #experience .launch-screen { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 18px; }
+  #home[data-mode="briefing"] #experience .launch-kicker,
+  #home[data-mode="briefing"] #experience .launch-screen h2 { grid-column: 1 / -1; }
+  #home[data-mode="briefing"] #experience .launch-screen h2 { font-size: 25px; }
+  #home[data-mode="briefing"] #experience .match-picker button { padding: 10px 7px; }
+  #home[data-mode="briefing"] #experience .match-picker span { font-size: 10px; }
+  #home[data-mode="briefing"] #experience .traits span { font-size: 9px; }
+  #home[data-mode="briefing"] #experience .single-action button { min-height: 38px; padding-block: 7px; }
+}
+@media (max-height: 650px) and (max-width: 600px) {
+  #home #experience .object-hand button { display: grid; grid-template-columns: 25px minmax(0, 1fr); align-items: center; gap: 4px 6px; padding: 8px 6px; }
+  #home #experience .object-hand svg { grid-row: 1 / 3; width: 25px; height: 25px; }
+  #home #experience .object-hand small { grid-column: 1 / -1; }
+  #home #experience .object-hand .level-marks { min-height: 10px; }
+}
+@media (hover: hover) and (pointer: fine) {
+  #home #experience button:hover { border-color: var(--match-accent); background-color: color-mix(in srgb, var(--match-accent) 7%, var(--match-paper)); }
+  #home #experience .primary-action:hover,
+  #home #experience [data-action="accept"]:hover { background: #494138; color: #faf8f4; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #home #experience *,
+  #home #experience *::before,
+  #home #experience *::after { animation: none !important; transition: none !important; }
+}

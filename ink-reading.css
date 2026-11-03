@@ -1,0 +1,17 @@
+/* 墨迹和纸面与滚动进度同步，不添加独立播放的文字动画。 */
+.story-content::before{background:radial-gradient(ellipse at 0 50%,rgba(215,170,96,.11),transparent 65%),linear-gradient(110deg,rgba(255,252,245,.64),rgba(244,236,220,.42));border-color:#d0bfa8;box-shadow:inset 3px 0 0 rgba(197,169,130,.09),inset 7px 0 0 rgba(255,252,245,.18)}
+.story-content::after{content:'✦';position:absolute;left:4px;top:calc(var(--read-center,50%) - 8px);font-size:14px;color:#ad8251;opacity:var(--chapter-progress);pointer-events:none}
+.story-content::before{top:var(--paper-top,0px);bottom:auto;height:var(--paper-height,100%);transform-origin:left var(--paper-origin,50%)}
+.story-title{font-family:'STKaiti','KaiTi','Microsoft YaHei',serif;font-weight:500;letter-spacing:.015em}
+.timeline-item{filter:blur(calc((1 - var(--item-reveal,0)) * 2px));clip-path:inset(0 calc((1 - var(--item-reveal,0)) * 100%) 0 0);text-shadow:0 0 calc((1 - var(--item-reveal,0)) * 12px) rgba(166,117,54,.26)}
+.story-word{display:inline!important;min-height:0!important;height:auto;font:inherit;line-height:inherit;vertical-align:baseline;padding:0 1px;margin:0;border:0;border-bottom:1px dotted #ac855a;border-radius:0;background:transparent;color:#825d37;cursor:pointer;text-align:inherit;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.story-word:hover{color:#5e4023;background:rgba(209,177,130,.13);text-shadow:0 0 9px rgba(196,151,81,.35);border-bottom-style:solid}
+.story-word:focus-visible{outline:2px solid #ad8251;outline-offset:3px}
+.timeline-item:focus-within{clip-path:none;filter:none}
+.story-scroll-hint{max-width:calc(58% - 16px);line-height:1.6}
+@media(max-width:640px){.story-scroll-hint{max-width:calc(100% - 90px);font-size:10px}}
+@media(max-width:360px){.story-title{font-size:24px;letter-spacing:.01em}}
+html.visual-paused .timeline-item{clip-path:none!important;filter:none;text-shadow:none}
+@media(prefers-reduced-motion:reduce){.timeline-item{clip-path:none!important;filter:none;text-shadow:none}}
+.flow-nodes button{min-height:90px;align-content:start;gap:10px;padding:15px 16px}
+@media(max-width:640px){.flow-nodes button{min-height:82px;padding:13px 12px;gap:8px}}

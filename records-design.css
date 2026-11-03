@@ -1,0 +1,19 @@
+.recording-invite{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px clamp(24px,7vw,112px);border-top:1px solid #d9cfc2;border-bottom:1px solid #d9cfc2;background:#f5f0e7;color:#665e55}
+.recording-invite strong{display:block;font-size:14px;font-weight:500;line-height:1.7;color:#2d2925}
+.recording-invite p{max-width:52em;margin:5px 0 0;font-size:12px;line-height:1.75}
+.recording-option{display:flex;align-items:center;gap:10px;min-height:44px;flex-shrink:0;font-size:13px;line-height:1.6;cursor:pointer}
+.recording-option input{width:18px;height:18px;accent-color:#6b8790}
+.recording-invite [data-records-status]{font-size:11px;color:#81766b}
+.remote-records-note{padding:11px 0 0;margin:0;font-size:11px;line-height:1.75;color:#756b60}
+.feedback-form .feedback-submit{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.feedback-form .feedback-submit button{min-height:44px}
+.feedback-form output{overflow-wrap:anywhere;font-size:12px;line-height:1.6}
+.feedback-form .feedback-notice{margin:0;max-width:42em;font-size:11px;line-height:1.75;color:#81766b}
+.feedback-form button:disabled{opacity:.55;cursor:wait}
+.launch-screen .briefing-recording{justify-content:flex-start;margin-top:0;font-size:12px}
+.launch-screen .briefing-recording-note{margin:0;font-size:10px;line-height:1.6;color:#81766b}
+.recording-disclosure{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px clamp(24px,7vw,112px);border-block:1px solid #d9cfc2;color:#81766b;font-size:11px;line-height:1.7;background:#f5f0e7}
+.recording-disclosure p{margin:0}
+.recording-disclosure button{flex-shrink:0;min-height:36px;border:0;border-bottom:1px solid #b8aa9b;background:transparent;color:#665e55;font:inherit;cursor:pointer;padding:4px 0}
+@media(max-width:640px){.recording-disclosure{padding:12px 24px;font-size:10px;align-items:flex-end}}
+@media(max-width:640px){.recording-invite{display:block;padding:18px 24px}.recording-option{margin-top:8px}.recording-invite p{font-size:11px}.feedback-form .feedback-submit{gap:8px}}

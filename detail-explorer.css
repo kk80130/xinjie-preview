@@ -1,0 +1,40 @@
+/* 阅读层沿用主线纸色，以路径与分支表达层级；内容切换即时，避免额外运动干扰核对。 */
+#storyDetail{width:min(860px,calc(100vw - 36px));max-height:calc(100dvh - 40px);overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable;touch-action:pan-y}
+#storyDetail .detail-shell{min-width:0}
+#storyDetail .detail-header{padding-top:18px}
+#storyDetail #detailTitle{max-width:650px;font-size:clamp(24px,3vw,36px);line-height:1.35;outline:none}
+.detail-breadcrumb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:22px 34px 0;color:#81796e;font-size:11px;line-height:1.5}
+.detail-breadcrumb button{font:inherit;color:inherit;background:none;border:0;border-bottom:1px solid #c8b9a5;padding:2px 0;cursor:pointer;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.detail-breadcrumb>*+*::before{content:"/";margin-right:8px;color:#b7a58e}
+.detail-breadcrumb [aria-current]{color:#a75b43}
+#storyDetail .detail-body{padding-top:0}
+#storyDetail .detail-section{padding:16px 0;border-top:1px solid #d9cfc0}
+#storyDetail .detail-section h3{font-size:16px;margin:0 0 8px;font-weight:600}
+#storyDetail .detail-section p,#storyDetail .detail-section li{font-size:14px;line-height:1.85;margin:0;color:#686157}
+.detail-links{margin-top:24px}
+.detail-links h3{font-size:11px;letter-spacing:.12em;font-weight:500;color:#887d6e;margin:0 0 8px}
+.detail-path-link{position:relative;display:block;width:100%;border:0;border-top:1px solid #cfc2b0;background:transparent;text-align:left;padding:16px 36px 16px 0;font:inherit;font-size:17px;line-height:1.5;color:#332e28;cursor:pointer}
+.detail-path-link small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:12px;line-height:1.7;color:#8a8072;margin-top:5px;max-width:560px}
+.detail-path-arrow{position:absolute;right:4px;top:16px;color:#aa7651}
+.detail-path-link:hover,.detail-path-link:focus-visible{color:#aa5e47;background:#eadfce66}
+.detail-explorer-footer{display:flex;justify-content:space-between;gap:16px;margin-top:32px;padding-top:20px;border-top:1px solid #cfc2b0}
+.detail-explorer-footer button,.detail-local-controls button{background:transparent;border:1px solid #bfb19e;padding:10px 14px;font:inherit;font-size:13px;cursor:pointer;color:#52483b;min-height:44px}
+.detail-local-controls{display:flex;gap:8px;flex-wrap:wrap}
+.detail-local-controls button[aria-pressed=true]{background:#38312b;color:#f4eee3;border-color:#38312b}
+.detail-exercise{border:1px solid #d2c4b0;background:#eee5d8;padding:20px;margin:18px 0}
+.detail-eyebrow{font-size:11px;color:#8b7963;letter-spacing:.1em;margin:0 0 15px}
+.detail-quote{font-size:19px;padding:20px;margin:0 0 18px;background:#e9cdbb;border-radius:14px;line-height:1.5;color:#453c34}
+[data-tone=cool] .detail-quote{background:#d2dfe0;border-radius:2px;color:#344449}
+.detail-caption{font-size:12px;line-height:1.75;color:#756b5d;margin:14px 0 0}
+.detail-number-row{display:flex;align-items:center;justify-content:space-between;gap:20px;font-size:14px;margin:0 0 12px}
+.detail-number-row input{width:90px;min-height:42px;border:1px solid #bdac96;background:#faf6ee;color:#393129;padding:8px;font:inherit}
+.detail-calculation{display:block;font-size:14px;line-height:1.8;padding-top:15px;border-top:1px solid #cdbda6;color:#68513d}
+.detail-pose-stage{height:100px;display:flex;align-items:center;justify-content:center}
+.detail-pose-stage i{display:block;width:48px;height:48px;border:1px solid #b97e68;background:#d6907755;border-radius:50%;flex:none}
+.detail-pose-stage .detail-pose-b{border-color:#6e8f96;background:#6e8f9644}
+.detail-pose-line{width:64px;height:1px;background:#a99b85}
+[data-pose="1"] .detail-pose-line{width:8px}
+[data-pose="1"] i{width:44px;height:52px}
+[data-pose="2"] .detail-pose-line{width:40px}
+#storyDetail button:focus-visible,#storyDetail input:focus-visible{outline:2px solid #688b92;outline-offset:4px}
+@media(max-width:600px){#storyDetail{width:calc(100vw - 16px);max-height:calc(100dvh - 16px)}.detail-breadcrumb{padding:18px 20px 0;gap:5px}.detail-breadcrumb button{max-width:105px}#storyDetail .detail-header{padding:16px 20px}#storyDetail .detail-body{padding:0 20px 24px}.detail-exercise{padding:15px}.detail-path-link{font-size:16px}.detail-explorer-footer{gap:8px}.detail-explorer-footer button{padding:10px}}

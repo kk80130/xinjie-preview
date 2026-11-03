@@ -1,0 +1,18 @@
+/* 动作发生在局部装饰层，按钮位置、文字与滚动展开的姿势保持稳定。 */
+.motion-control{position:relative;--control-reach:0;--control-arc:0;transition:color 240ms cubic-bezier(.4,0,.2,1),background-color 320ms cubic-bezier(.4,0,.2,1),border-color 240ms cubic-bezier(.4,0,.2,1)}
+.motion-control::after{content:'';position:absolute;left:10px;right:10px;bottom:4px;height:1px;background:currentColor;opacity:calc(clamp(0,var(--control-reach),1) * .45);transform:scaleX(max(0,var(--control-reach)));transform-origin:left center;pointer-events:none}
+.narrative-temperature.motion-control{--control-reach:0}
+.narrative-temperature .motion-control>span{transform:translateY(calc(var(--control-reach) * -2px + var(--control-arc) * -1px)) scaleX(calc(1 + var(--control-reach) * .07)) scaleY(calc(1 / (1 + var(--control-reach) * .07)));transform-origin:center}
+.narrative-footer .motion-control>span{transform:translate(calc(var(--control-reach) * 3px),calc(var(--control-reach) * -2px - var(--control-arc) * 1.5px))}
+/* 箭头原关键帧在移出时会跳回原点，改用可从当前姿势反向衔接的过渡。 */
+.hero-enter::after{transition:transform 360ms cubic-bezier(.2,.8,.25,1)}
+.hero-enter:hover::after,.hero-enter:focus-visible::after{animation:none;transform:translate(3px,-3px)}
+.hero-actions button:focus-visible::before{transform:scale(1.025,1.04)}
+.hero-enter:active::after{transform:translate(0,0);transition-duration:85ms}
+html.visual-paused .motion-control::after{transform:none;opacity:0}
+html.visual-paused .motion-control>span{transform:none}
+@media(prefers-reduced-motion:reduce){
+  .motion-control,.hero-enter::after{transition:none!important}
+  .motion-control::after{transform:none;opacity:0}
+  .motion-control>span,.hero-enter:hover::after,.hero-enter:focus-visible::after{transform:none}
+}

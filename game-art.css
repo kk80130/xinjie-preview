@@ -1,0 +1,465 @@
+/* 可玩原型沿用双球的经纬线、错位轨道与节点；装饰只贴合信息边界，不遮挡内容。 */
+#experience {
+  --game-coral: #cf765c;
+  --game-blue: #6b8790;
+  --game-ink: #2d2925;
+  --game-wire-warm: var(--art-mesh-warm);
+  --game-wire-cool: var(--art-mesh-cool);
+}
+
+#experience .chat-stage {
+  border-radius: 26px 7px 26px 7px;
+  box-shadow: 0 20px 60px #4733290d, 4px 4px 0 #6b879014;
+}
+
+#experience .chat-header {
+  gap: 14px;
+  padding-inline: 24px;
+  background: var(--surface-strong);
+  box-shadow: none;
+}
+
+#experience .contact-avatar {
+  position: relative;
+  overflow: visible;
+  border-color: var(--game-blue);
+  border-radius: 48% 48% 16% 48%;
+  background: var(--game-wire-cool) 22px -6px / 60px 60px no-repeat, #e8ece8;
+}
+
+#experience .contact-avatar::after {
+  position: absolute;
+  right: -3px;
+  bottom: 2px;
+  width: 7px;
+  height: 7px;
+  border: 2px solid var(--surface-strong);
+  border-radius: 50%;
+  background: var(--game-blue);
+  content: "";
+}
+
+#experience .round-chip {
+  align-self: stretch;
+  display: grid;
+  align-content: center;
+  padding: 6px 0 6px 16px;
+  border: 0;
+  border-left: 1px solid var(--line);
+  color: var(--game-ink);
+  letter-spacing: .06em;
+}
+
+#experience .signal-chip {
+  position: relative;
+  padding: 7px 12px 7px 23px;
+  border-radius: 20px 3px 20px 3px;
+  font-weight: 500;
+}
+
+#experience .signal-chip::before {
+  position: absolute;
+  top: calc(50% - 3px);
+  left: 10px;
+  width: 6px;
+  height: 6px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  content: "";
+}
+
+/* 准备页让“可见 / 未知”有不同的信息表面，未知处仍只显示原有的未知文字。 */
+#experience .launch-screen {
+  padding: 30px 24px;
+  gap: 12px;
+  background: var(--game-wire-warm) right -24px top -100px / 190px 166px no-repeat, var(--surface);
+}
+
+#experience .launch-kicker {
+  position: relative;
+  margin-block: 8px 4px;
+  padding-inline: 25px;
+  color: var(--game-blue);
+  letter-spacing: .12em;
+}
+
+#experience .launch-kicker::before,
+#experience .launch-kicker::after {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 1px;
+  background: currentColor;
+  content: "";
+}
+
+#experience .launch-kicker::before { left: 0; }
+#experience .launch-kicker::after { right: 0; }
+
+#experience .launch-screen h2 {
+  font-size: clamp(32px, 4.4vw, 58px);
+  font-weight: 600;
+  letter-spacing: -.04em;
+  line-height: 1.2;
+}
+
+#experience .launch-subtitle {
+  font-size: 14px;
+}
+
+#experience .launch-meta {
+  gap: 10px;
+  margin-top: 14px;
+  border: 0;
+}
+
+#experience .launch-meta span {
+  position: relative;
+  padding: 16px 12px;
+  border: 1px solid var(--line);
+  background: var(--surface-strong);
+  text-align: left;
+}
+
+#experience .launch-meta span:first-child {
+  border-radius: 26px 4px 4px 4px;
+  border-color: color-mix(in srgb, var(--game-coral) 52%, var(--line));
+  padding-left: 20px;
+}
+
+#experience .launch-meta span:nth-child(2) {
+  border-style: dashed;
+  background: var(--game-wire-cool) right -10px top / 78px 70px no-repeat, var(--surface-soft);
+}
+
+#experience .launch-meta span:last-child {
+  border-radius: 4px 4px 26px 4px;
+}
+
+#experience .launch-meta strong { font-size: 20px; font-weight: 500; }
+#experience .prep-note { max-width: 560px; line-height: 1.85; font-size: 13px; }
+#experience .briefing-recording-note { font-size: 11px; color: var(--muted); }
+
+#experience .primary-action {
+  position: relative;
+  min-height: 48px;
+  border-radius: 5px 28px 28px 5px;
+  box-shadow: 3px 3px 0 #cf765c40, 5px 5px 0 1px var(--surface), 5px 5px 0 2px #6b87907a;
+  font-weight: 500;
+}
+
+#experience .secondary-action {
+  min-height: 46px;
+  border-color: var(--line-strong);
+  border-radius: 20px 4px 4px 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+#experience .single-action { gap: 12px; padding-block: 16px; }
+
+/* 发言沿连接节点进入，系统消息留在共同基线，避免将提示误认成对方发言。 */
+#experience .message-list {
+  gap: 16px;
+  padding-block: 25px;
+  background: linear-gradient(90deg, transparent 23px, #6b879012 23px, #6b879012 24px, transparent 24px);
+}
+
+#experience .message-row { gap: 9px; }
+
+#experience .message-bubble {
+  position: relative;
+  padding: 12px 16px;
+  border-color: color-mix(in srgb, var(--game-blue) 42%, var(--line));
+  border-radius: 19px 19px 19px 3px;
+  box-shadow: 0 3px 0 #6b87900a;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+#experience .message-bubble::before {
+  position: absolute;
+  bottom: 8px;
+  left: -4px;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--game-blue);
+  border-radius: 50%;
+  background: var(--surface-strong);
+  content: "";
+}
+
+#experience .message-row.is-player .message-bubble {
+  border-radius: 19px 19px 3px 19px;
+  border-color: color-mix(in srgb, var(--game-coral) 58%, var(--line));
+  background: color-mix(in srgb, var(--surface-strong) 35%, var(--trust-soft));
+}
+
+#experience .message-row.is-player .message-bubble::before {
+  right: -4px;
+  left: auto;
+  border-color: var(--game-coral);
+  background: var(--trust-soft);
+}
+
+#experience .message-row.is-system .message-bubble {
+  padding: 5px 15px;
+  border: 0;
+  border-left: 1px solid var(--line-strong);
+  border-right: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+#experience .message-row.is-system .message-bubble::before { display: none; }
+
+/* 请求采用账簿结构：金额与状态以切缝分离，经纬线压在右侧留白里。 */
+#experience .transaction-slip {
+  position: relative;
+  width: min(360px, 88%);
+  gap: 7px;
+  padding: 17px 25px 15px;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: 5px 5px 22px 5px;
+  background: var(--game-wire-warm) right -16px top -28px / 96px 160px no-repeat, var(--surface-strong);
+  box-shadow: 3px 4px 0 #b8aa9b26;
+}
+
+#experience .transaction-slip::before {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 9px;
+  border-left: 1px solid var(--game-coral);
+  content: "";
+}
+
+#experience .transaction-slip strong {
+  margin-block: 2px;
+  color: var(--game-ink);
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+#experience .transaction-slip span:last-child {
+  padding-top: 9px;
+  border-top: 1px dashed var(--line-strong);
+}
+
+/* 卡牌以经纬角饰和不同受力边界区分用途，不复制球体也不依赖颜色辨认。 */
+#experience .stage-controls { border-top-color: var(--line-strong); }
+#experience .composer { gap: 12px; padding: 16px 22px 17px; }
+#experience .composer-label { font-size: 11px; font-weight: 500; }
+#experience .composer-label span:first-child { color: var(--game-ink); }
+#experience .choice-list { gap: 12px; padding: 4px 2px 7px; }
+
+#experience .choice-button {
+  --choice-accent: var(--game-blue);
+  --card-wire: var(--game-wire-cool);
+  isolation: isolate;
+  min-height: 104px;
+  padding: 15px 26px 15px 17px;
+  border: 1px solid color-mix(in srgb, var(--choice-accent) 65%, var(--line));
+  border-radius: 5px 22px 5px 5px;
+  background: var(--surface-strong);
+  box-shadow: 2px 3px 0 #b8aa9b26;
+  font-size: 13px;
+  line-height: 1.65;
+  transition: border-color 180ms ease, background-color 180ms ease, box-shadow 240ms ease;
+}
+
+#experience .choice-button small {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 7px;
+  color: color-mix(in srgb, var(--choice-accent) 72%, var(--game-ink));
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .025em;
+}
+
+#experience .choice-button::before {
+  z-index: -1;
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: auto;
+  width: 55px;
+  height: 45px;
+  background: var(--card-wire) top right / 65px 57px no-repeat;
+  opacity: .5;
+  transform: translate(calc(var(--control-reach, 0) * -1px), calc(var(--control-reach, 0) * -3px - var(--control-arc, 0) * 1px)) rotate(var(--card-wire-angle, 0deg));
+}
+
+#experience .choice-button::after {
+  position: absolute;
+  right: 8px;
+  bottom: 13px;
+  width: 6px;
+  height: 6px;
+  border: 1px solid var(--choice-accent);
+  border-radius: 50%;
+  background: var(--surface-strong);
+  content: "";
+  transition: background-color 180ms ease, box-shadow 240ms ease;
+}
+
+#experience .choice-trust,
+#experience .choice-follow {
+  --choice-accent: var(--game-coral);
+  --card-wire: var(--game-wire-warm);
+  border-radius: 23px 5px 5px 5px;
+}
+
+#experience .choice-info,
+#experience .choice-verify {
+  border-radius: 5px 5px 28px 5px;
+  border-left: 3px double var(--game-blue);
+}
+
+#experience .choice-info::before,
+#experience .choice-verify::before {
+  top: auto;
+  bottom: 0;
+  --card-wire-angle: 90deg;
+}
+
+#experience .choice-defense,
+#experience .choice-refuse {
+  --choice-accent: var(--game-ink);
+  border-radius: 3px;
+  border-left: 4px solid var(--game-ink);
+  background: linear-gradient(90deg, #6b87900c, transparent 48%), var(--surface-strong);
+}
+
+#experience .choice-defense::after,
+#experience .choice-refuse::after {
+  width: 8px;
+  height: 1px;
+  border: 0;
+  border-radius: 0;
+  background: var(--game-ink);
+}
+
+#experience .choice-induce,
+#experience .choice-counter {
+  --choice-accent: var(--game-coral);
+  --card-wire: var(--game-wire-warm);
+  border-radius: 5px 25px 5px 25px;
+}
+
+#experience .choice-transfer,
+#experience .choice-accept {
+  --choice-accent: var(--game-coral);
+  --card-wire: var(--game-wire-warm);
+  padding-bottom: 21px;
+  border-radius: 5px 18px 5px 5px;
+  background: linear-gradient(0deg, transparent 10px, #b8aa9b6b 10px, #b8aa9b6b 11px, transparent 11px), var(--surface-strong);
+}
+
+#experience .choice-multiply { border-radius: 5px 24px 5px 24px; border-top: 3px double var(--game-blue); }
+#experience .choice-cashout { border-radius: 5px 5px 5px 24px; border-bottom: 3px solid var(--game-blue); }
+
+@media (hover: hover) and (pointer: fine) {
+  #experience .choice-button:not(:disabled):hover {
+    border-color: var(--choice-accent);
+    background-color: color-mix(in srgb, var(--surface-strong) 94%, var(--choice-accent));
+    box-shadow: 2px 7px 0 color-mix(in srgb, var(--choice-accent) 13%, transparent);
+    transform: none;
+  }
+  #experience .choice-button:not(:disabled):hover::after { background: var(--choice-accent); }
+}
+
+#experience .choice-button:focus-visible { outline: 2px solid var(--game-blue); outline-offset: 3px; }
+#experience .choice-button:active,
+#experience .choice-button.is-chosen {
+  border-color: var(--choice-accent);
+  background-color: color-mix(in srgb, var(--surface-strong) 88%, var(--choice-accent));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--choice-accent) 25%, transparent);
+  transform: none;
+}
+#experience .choice-button.is-chosen::after { background: var(--choice-accent); box-shadow: 0 0 0 3px var(--surface-strong), 0 0 0 4px var(--choice-accent); }
+#experience .choice-button:disabled { opacity: .52; box-shadow: none; cursor: wait; }
+#experience .choice-button.is-chosen:disabled { opacity: 1; }
+html.visual-paused #experience .choice-button::before { transform: rotate(var(--card-wire-angle, 0deg)); }
+@media (prefers-reduced-motion: reduce) {
+  #experience .choice-button::before { transform: rotate(var(--card-wire-angle, 0deg)); }
+}
+#experience .action-status { padding: 4px 0 4px 11px; border-left-width: 1px; background: none; font-size: 11px; }
+#experience .action-status.is-waiting { padding: 11px 15px; border-radius: 4px 20px 20px 4px; }
+
+/* 结算是一张有信息主次的账页，只突出玩家自己的净变化。 */
+#experience .result-screen {
+  gap: 22px;
+  padding: 30px clamp(20px, 5vw, 62px);
+  background: var(--game-wire-cool) right -40px top -80px / 165px 145px no-repeat;
+}
+#experience .result-title { padding-left: 17px; border-left: 2px solid var(--game-coral); }
+#experience .result-title p { font-family: var(--data-font); font-size: 11px; font-weight: 400; }
+#experience .result-title h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 600; }
+#experience .result-grid { gap: 0; border: 1px solid var(--line-strong); border-radius: 5px 5px 22px 5px; overflow: hidden; background: var(--surface-strong); }
+#experience .result-item { min-width: 0; min-height: 87px; padding: 15px 20px; border: 0; border-bottom: 1px dashed var(--line); }
+#experience .result-item:nth-child(odd) { border-right: 1px solid var(--line); }
+#experience .result-item:nth-last-child(-n+2) { border-bottom: 0; }
+#experience .result-item strong { font-family: var(--data-font); font-weight: 500; font-size: 22px; }
+#experience .result-item:nth-child(3) { background: var(--game-ink); color: var(--surface-strong); }
+#experience .result-item:nth-child(3) span { color: #e7d9cc; }
+#experience .result-item:nth-child(3) strong { font-size: 30px; line-height: 1.1; }
+#experience .result-item:last-child { background: var(--game-wire-cool) right -10px top / 58px 90px no-repeat, var(--surface-soft); }
+#experience .result-item:last-child strong { font-size: 15px; font-family: var(--body-font); }
+#experience .settlement-note { padding: 0; border: 0; background: none; font-size: 12px; color: var(--muted); }
+
+@media (max-width: 640px) {
+  #experience .chat-stage { border-radius: 20px 5px 20px 5px; }
+  #experience .chat-header { gap: 8px; padding-inline: 12px; }
+  #experience .signal-chip { padding: 6px 8px 6px 18px; font-size: 10px; }
+  #experience .signal-chip::before { left: 7px; width: 5px; height: 5px; top: calc(50% - 2.5px); }
+  #experience .contact-copy strong { font-size: 13px; }
+  #experience .contact-copy span { font-size: 10px; }
+  #experience .round-chip { padding-left: 8px; font-size: 10px; }
+  #experience .launch-screen { padding: 26px 18px; gap: 10px; }
+  #experience .launch-screen h2 { font-size: clamp(29px, 7.6vw, 38px); }
+  #experience .launch-meta { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; margin-top: 10px; }
+  #experience .launch-meta span { padding: 13px 8px; }
+  #experience .launch-meta span:first-child { padding-left: 12px; border-top: 1px solid var(--line); }
+  #experience .launch-meta strong { font-size: 16px; }
+  #experience .launch-meta small { font-size: 9px; }
+  #experience .single-action { gap: 9px; padding-inline: 12px; }
+  #experience .launch-action .primary-action { min-width: 0; flex: 1; }
+  #experience .single-action .secondary-action { padding-inline: 12px; }
+  #experience .composer { padding: 13px 12px 14px; gap: 8px; }
+  #experience .choice-list { gap: 9px; padding: 4px 2px 7px; scroll-padding-inline: 2px; }
+  #experience .choice-button { min-width: min(78%, 280px); min-height: 105px; padding-top: 13px; font-size: 13px; }
+  #experience .message-list { padding: 18px 14px; }
+  #experience .message-bubble { max-width: 83%; padding: 10px 12px; font-size: 13px; }
+  #experience .message-time { font-size: 9px; }
+  #experience .transaction-slip { width: min(300px, 88%); }
+  #experience .result-screen { padding: 24px 16px; gap: 18px; }
+  #experience .result-item { padding: 12px 13px; min-height: 82px; }
+  #experience .result-item span { font-size: 10px; }
+  #experience .result-item strong { font-size: 20px; }
+}
+
+@media (hover: none), (pointer: coarse) {
+  #experience .choice-button:hover:not(.is-chosen) { transform: none; box-shadow: 2px 3px 0 #b8aa9b26; }
+}
+
+@media (max-width: 360px) {
+  #experience .chat-header { gap: 6px; padding-inline: 9px; }
+  #experience .contact-avatar { width: 34px; height: 34px; flex-basis: 34px; }
+  #experience .contact-copy { flex: 1; }
+  #experience .signal-chip { max-width: 74px; margin-left: 0; flex-shrink: 0; }
+  #experience .round-chip { flex-shrink: 0; font-size: 9px; padding-left: 7px; }
+}
+
+/* 装饰不新增循环；暂停和减少动态下保留清楚的选择状态。 */
+html.visual-paused #experience .choice-button:hover { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  #experience *, #experience *::before, #experience *::after { animation: none !important; transition: none !important; }
+  #experience .choice-button:hover { transform: none; }
+}

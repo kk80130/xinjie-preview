@@ -1,0 +1,384 @@
+/* 章节的纹样来自原双球经纬；仅进入边缘和信息接缝，阅读时间轴仍由原脚本控制。 */
+.story-content:not(.narrative-content)::before {
+  border-color: #c9bfae;
+  border-radius: 2px 22px 2px 2px;
+  background-color: #f5f0e7;
+  background-image: var(--art-mesh-warm, none), linear-gradient(110deg, #fcf8efb3, #f5f0e759);
+  background-position: right -64px top -94px, 0 0;
+  background-size: 220px 186px, 100% 100%;
+  background-repeat: no-repeat;
+  box-shadow: inset 3px 0 0 #6b879030;
+}
+.story-content.module-research::before { border-top-color: #cf765c; }
+.story-content.module-system::before { border-top-color: #6b8790; }
+.module-flow::before { border-bottom-style: dashed; }
+.story-content:not(.narrative-content) .story-eyebrow .chapter-index {
+  color: #655a4d;
+  padding-left: 10px;
+  border-left: 3px solid #cf765c;
+}
+.module-system .story-eyebrow .chapter-index,
+.module-motion .story-eyebrow .chapter-index { border-left-color: #6b8790; }
+.story-content:not(.narrative-content) .story-eyebrow > span:last-child {
+  border-bottom: 1px solid #c8b9a5;
+  padding-bottom: 3px;
+}
+.story-content:not(.narrative-content) .story-title { color: #2d2925; }
+.story-content .module-caption { color: #6f665b; }
+
+/* 正反信息采用不同的信息边界；未知区只遮蔽版面，不提供隐藏数值。 */
+.information-spread { border-color: #a9b5b1; }
+.information-spread > .information-face {
+  background: linear-gradient(90deg, #6b879012, transparent 80%);
+  border-right: 1px solid #a9b5b1;
+  padding-left: 12px;
+}
+.information-spread > .information-back {
+  background-image: var(--art-mesh-cool, none);
+  background-repeat: no-repeat;
+  background-position: right -52px bottom -68px;
+  background-size: 170px 150px;
+}
+.information-spread .module-caption { font-weight: 600; letter-spacing: .06em; }
+.information-face .module-caption { color: #527079; }
+.information-back .module-caption { color: #856550; }
+.module-designed .specimen-message {
+  border: 1px solid #b3bdb5;
+  border-left: 3px solid #6b8790;
+  border-radius: 2px 13px 13px 10px;
+  background: #e8ece4;
+  color: #354c50;
+}
+.cardback-pair i {
+  border-radius: 2px 10px 2px 2px;
+  background-color: #e8e7dc;
+  background-image: var(--art-mesh-cool, none);
+  background-size: 100px 90px;
+  background-position: center;
+}
+.cardback-pair i + i { background-color: #e9e2d4; border-color: #b0836d; }
+.story-questions.compact-questions > button {
+  border-color: #d1c6b7;
+  background-image: linear-gradient(90deg, #6b879012, transparent 40%);
+  background-position: left center;
+  background-size: 24px 100%;
+  background-repeat: no-repeat;
+}
+.compact-questions .question-number {
+  border-bottom: 1px solid #bca78f;
+  color: #77634e;
+}
+.compact-questions > button:hover,
+.compact-questions > button:focus-visible { background-color: #e4e8df80; }
+
+/* 消息、词卡与凭据保持不同的轮廓，不能被同一套卡片框覆盖。 */
+.visual-specimens { gap: 16px; border-bottom-color: #c5b8a6; }
+.specimen-word {
+  position: relative;
+  border-color: #9eaaa3;
+  border-left: 4px solid #6b8790;
+  border-radius: 2px 15px 2px 2px;
+  padding-left: 12px;
+  background: #e8ece3;
+  box-shadow: 3px 3px 0 #6b879016;
+}
+.specimen-word::before {
+  content: '';
+  position: absolute;
+  right: 5px;
+  top: 6px;
+  width: 18px;
+  height: 7px;
+  border-bottom: 1px solid #6b87908c;
+  border-radius: 0 0 100% 50%;
+  pointer-events: none;
+}
+.specimen-word > span { color: #527078; }
+.specimen-receipt {
+  border: 0;
+  border-block: 1px dashed #aa8c70;
+  border-radius: 0;
+  background: linear-gradient(90deg, #cf765c10, transparent);
+  box-shadow: inset 0 -3px 0 #d4c4ae3d;
+}
+.specimen-receipt > span { color: #8c6049; }
+.specimen-receipt strong { font-family: Consolas, 'Microsoft YaHei', sans-serif; }
+.module-system .lab-preview {
+  border-color: #9baea9;
+  border-radius: 2px 20px 2px 2px;
+  box-shadow: inset 3px 0 0 #6b87902e;
+}
+.module-system .lab-contact {
+  color: #526e76;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #6b879032;
+}
+.lab-contact::before { background: transparent; border: 1px solid currentColor; }
+.module-system .lab-bubble { border-left-width: 2px; }
+.lab-presets button {
+  border-color: #b8bcae;
+  border-radius: 2px 12px 2px 2px;
+  border-bottom-width: 2px;
+  background: #f4f0e6;
+  color: #5d665d;
+}
+.lab-presets button[data-lab-state="trust"] { border-bottom-color: #cf765c; }
+.lab-presets button[data-lab-state="doubt"] { border-bottom-color: #6b8790; }
+.lab-presets button[data-lab-state="conflict"] {
+  background-image: linear-gradient(110deg, #cf765c12, #6b879016);
+  border-bottom-color: #817d73;
+}
+.lab-presets button[aria-pressed="true"] {
+  background-color: #364b50;
+  background-image: none;
+  border-color: #364b50;
+  border-bottom-color: #cf765c;
+  color: #fffaf0;
+}
+.lab-controls label { color: #5c655f; }
+.lab-controls output {
+  width: fit-content;
+  color: #5b6e71;
+  font-family: Consolas, monospace;
+  border-bottom: 1px solid #b1bbb0;
+}
+.lab-controls input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  accent-color: #6b8790;
+}
+.lab-controls input[type="range"]::-webkit-slider-runnable-track {
+  height: 5px;
+  border-block: 1px solid #aeb5a9;
+  background: repeating-linear-gradient(90deg, #6b879047 0 1px, transparent 1px 12px);
+}
+.lab-controls input[type="range"]::-moz-range-track {
+  height: 5px;
+  border-block: 1px solid #aeb5a9;
+  background: repeating-linear-gradient(90deg, #6b879047 0 1px, transparent 1px 12px);
+}
+.lab-controls input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-top: -6px;
+  border: 1px solid #607d83;
+  border-radius: 50%;
+  background: #f8f3e9;
+  box-shadow: inset 0 0 0 4px #f8f3e9, inset 0 0 0 8px #6b8790;
+}
+.lab-controls input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 1px solid #607d83;
+  border-radius: 50%;
+  background: #f8f3e9;
+  box-shadow: inset 0 0 0 4px #f8f3e9, inset 0 0 0 8px #6b8790;
+}
+
+/* 动作相位是附着在同一基线的页签；不另建播放时钟或改变双球姿势。 */
+.module-motion .motion-study {
+  border-color: #acb9b3;
+  border-radius: 2px 20px 2px 2px;
+  background: #eee9df;
+  box-shadow: inset 0 -3px 0 #6b879014;
+}
+.motion-phases { border-bottom: 1px solid #b6b9aa; gap: 5px; padding-bottom: 3px; }
+.motion-phases button {
+  border-color: transparent;
+  border-bottom: 2px solid #c1b5a4;
+  border-radius: 10px 2px 0 0;
+  background: #e9e3d7;
+  color: #716455;
+}
+.motion-phases button:nth-child(even) { border-top-left-radius: 2px; border-top-right-radius: 10px; }
+.motion-phases button[data-ui-art] { padding-left: 40px; }
+.motion-phases button[aria-pressed="true"] {
+  background: #354a50;
+  border-color: #354a50;
+  border-bottom-color: #cf765c;
+  color: #fff8ed;
+}
+.motion-poses { border-top-color: #b6b9aa; }
+.motion-poses > div + div { border-left: 1px solid #c8c3b5; padding-left: 10px; }
+.motion-poses strong { color: #3f5355; }
+
+/* 八步仍是实际顺序；各阶段的接缝、牌背与结算边界给出用途差异。 */
+.module-flow .action-route button {
+  border-color: #b7b9ab;
+  background-color: #f3eee3;
+  border-top: 1px solid transparent;
+  color: #363b34;
+}
+.module-flow .action-route button strong { color: #393c35; }
+.module-flow .action-route button > span { color: #725f4f; }
+.module-flow .action-route button[data-detail="flow-briefing"] { border-top-color: #a79d8b; border-radius: 2px 15px 0 0; }
+.module-flow .action-route button[data-detail="flow-stake"] {
+  border-top-color: #6b8790;
+  background-image: var(--art-mesh-cool, none);
+  background-repeat: no-repeat;
+  background-size: 110px 90px;
+  background-position: right -45px top -42px;
+}
+.module-flow .action-route button[data-detail="flow-contact"] { border-radius: 2px 15px 15px 2px; background-color: #e6ece3; }
+.module-flow .action-route button[data-detail="flow-trust"] { border-top-color: #cf765c; background-color: #f0e2d6; }
+.module-flow .action-route button[data-detail="flow-probe"] { border-left: 3px double #7c9698; }
+.module-flow .action-route button[data-detail="flow-transfer"] {
+  border-bottom-style: dashed;
+  background-image: linear-gradient(90deg, #cf765c12, transparent);
+}
+.module-flow .action-route button[data-detail="flow-cashout"] { border-right: 2px solid #6b8790; }
+.module-flow .action-route button[data-detail="flow-settlement"] { border-bottom: 3px double #ae8b6b; border-radius: 0 0 10px 2px; }
+.module-flow .action-route button:hover,
+.module-flow .action-route button:focus-visible { background-color: #dde5db; border-top-color: #6b8790; }
+.flow-receipt {
+  border-block-color: #b99b7e;
+  background: linear-gradient(90deg, #cf765c0d, transparent 75%);
+  padding-inline: 10px;
+}
+.flow-receipt p strong:last-child { color: #8a513b; border-bottom: 1px solid #c29a7d; }
+.module-process .design-decisions > div { border-top-color: #c9c1b0; }
+.module-process .design-decisions > div > span { color: #577078; border-left: 2px solid #6b8790; padding-left: 8px; }
+.implementation-ledger { border-top: 3px double #b2b4a5; }
+.implementation-ledger > div + div { border-left: 1px dashed #bca98f; padding-left: 12px; }
+.implementation-ledger strong { color: #516b6e; }
+.implementation-ledger > div + div strong { color: #8c6c4f; }
+
+/* 反馈是网站表单：节点选择和书写边界独立于游戏的词卡输入。 */
+#deliverables .evidence-grid > div {
+  border-top: 1px solid #bfc2b4;
+  border-left: 2px solid #6b8790;
+  padding-left: 10px;
+}
+#deliverables .evidence-value { color: #3d555a; font-family: Bahnschrift, Consolas, sans-serif; }
+.feedback-form { border-top: 3px double #c1b39d; }
+.feedback-form fieldset > label {
+  border-left: 1px solid #b5bbae;
+  padding-left: 9px;
+  color: #665f54;
+}
+.feedback-form fieldset > label:has(input:checked) {
+  border-left: 3px solid #6b8790;
+  padding-left: 7px;
+  background: linear-gradient(90deg, #6b879016, transparent);
+  color: #364f54;
+}
+.feedback-form input[type="radio"] { accent-color: #597c82; }
+.feedback-form textarea {
+  border-color: #b9b7a4;
+  border-left: 3px solid #6b879080;
+  border-radius: 2px 15px 2px 2px;
+  background-color: #faf6ed;
+  background-image: var(--art-mesh-cool, none);
+  background-position: right -76px bottom -73px;
+  background-size: 150px 130px;
+  background-repeat: no-repeat;
+  caret-color: #b45f47;
+}
+.feedback-form textarea::placeholder { color: #817669; }
+.feedback-form textarea:focus-visible { border-left-color: #cf765c; background-color: #fffbf2; }
+.feedback-form button[type="submit"] {
+  border-radius: 2px 15px 2px 2px;
+  border-color: #344b50;
+  background-color: #344b50;
+  box-shadow: inset 3px 0 0 #cf765c;
+  color: #fff9ee;
+}
+.feedback-form button[type="submit"]:hover { background-color: #263d42; }
+.feedback-form button[type="submit"]:disabled { box-shadow: none; opacity: .55; }
+.feedback-list > p { border-top: 1px dashed #b9b3a1; border-left: 2px solid #6b87904d; padding-left: 10px; }
+
+/* 详情像从章节节点展开的索引：保留原模态焦点、滚动恢复与分支导航。 */
+#storyDetail {
+  border-color: #9fada6;
+  border-radius: 2px 22px 2px 2px;
+  background-color: #f8f3e9;
+  box-shadow: 0 18px 65px #2d292526, inset 3px 0 0 #6b87902e;
+}
+#storyDetail .detail-header {
+  border-bottom: 1px solid #bcbba9;
+  background-color: #f8f3e9;
+  background-image: var(--art-mesh-warm, none);
+  background-repeat: no-repeat;
+  background-size: 180px 155px;
+  background-position: right -76px top -87px;
+}
+#storyDetail #detailKicker { color: #7c644e; font-family: Consolas, 'Microsoft YaHei', sans-serif; }
+#storyDetail .detail-header button {
+  border: 1px solid #a3b0a7;
+  border-radius: 50% 2px 50% 50%;
+  background: #eee8dc;
+  color: #466269;
+}
+.detail-breadcrumb { border-left: 3px solid #6b8790; }
+.detail-breadcrumb [aria-current] { color: #91503c; }
+.detail-breadcrumb button[data-ui-art] { padding-left: 24px; }
+.detail-breadcrumb button > .ui-art-icon { left: 0; width: 18px; height: 18px; }
+#storyDetail .detail-section { border-top-color: #cdc4b2; }
+#storyDetail .detail-section h3 { color: #415b5f; }
+.detail-links { border-left: 1px solid #b5c1b7; padding-left: 14px; }
+.detail-path-link { border-top-color: #c5c0ad; }
+.detail-path-link[data-ui-art] { padding-left: 34px; }
+.detail-path-link > .ui-art-icon { left: 0; width: 23px; height: 23px; }
+.detail-path-link:hover,
+.detail-path-link:focus-visible { background: #e2e8de; color: #45676c; }
+.detail-path-arrow { color: #a45f43; border-bottom: 1px solid #bca58b; }
+.detail-exercise {
+  border-color: #a9b5ab;
+  border-left: 3px solid #6b8790;
+  border-radius: 2px 18px 2px 2px;
+  background: #ececdf;
+}
+.detail-quote { border-left: 3px solid #be7e62; border-radius: 2px 16px 16px 10px; }
+.detail-local-controls button {
+  border-color: #b0b6a7;
+  border-radius: 2px 12px 2px 2px;
+  background: #f5f0e4;
+}
+.detail-local-controls button[aria-pressed="true"] { background: #354d52; border-color: #354d52; box-shadow: inset 0 -2px 0 #cf765c; }
+.detail-calculation { border-top: 3px double #baa88d; color: #765841; }
+.detail-number-row input { border-color: #aab4a6; border-bottom: 2px solid #6b8790; border-radius: 2px; }
+.detail-explorer-footer { border-top: 1px dashed #b5ab95; }
+.detail-explorer-footer button { border-color: #a6b0a2; border-radius: 13px 2px 2px 2px; background: #f0ecdf; }
+.detail-explorer-footer button[data-ui-art] { padding-left: 35px; }
+.detail-explorer-footer button > .ui-art-icon { left: 8px; width: 20px; height: 20px; }
+.detail-explorer-footer button:hover { background: #e0e6da; }
+
+/* 不以装饰位移表达状态，暂停和减少动态仍有完整的颜色、边界与焦点反馈。 */
+.story-content:not(.narrative-content) :is(button, input, textarea):focus-visible,
+#storyDetail :is(button, input):focus-visible { outline: 2px solid #476f79; outline-offset: 3px; }
+.story-content:not(.narrative-content) button:disabled,
+#storyDetail button:disabled { cursor: not-allowed; opacity: .55; }
+
+@media (max-width: 640px) {
+  .story-content:not(.narrative-content)::before {
+    border-top-right-radius: 16px;
+    background-position: right -83px top -98px, 0 0;
+    background-size: 190px 163px, 100% 100%;
+  }
+  .story-content:not(.narrative-content) .story-eyebrow > span:last-child { width: fit-content; }
+  .information-spread > .information-face { padding-left: 7px; }
+  .information-spread > .information-back { background-size: 130px 110px; background-position: right -64px bottom -55px; }
+  .visual-specimens { gap: 7px; }
+  .specimen-word { padding-left: 7px; border-left-width: 3px; box-shadow: 2px 2px 0 #6b879016; }
+  .specimen-word::before { width: 11px; right: 3px; top: 4px; }
+  .lab-presets button, .motion-phases button { min-height: 40px; }
+  .lab-controls input[type="range"] { min-height: 36px; }
+  .motion-poses > div + div { padding-left: 7px; }
+  .flow-receipt { padding-inline: 6px; }
+  .implementation-ledger > div + div { padding-left: 8px; }
+  .feedback-form fieldset > label { flex: 1 1 auto; }
+  .feedback-form textarea { background-size: 120px 100px; background-position: right -80px bottom -70px; }
+  .detail-links { padding-left: 10px; }
+}
+@media (max-width: 360px) {
+  .information-spread > .information-face { padding-left: 5px; }
+  .visual-specimens .specimen-word, .visual-specimens .specimen-receipt { padding-inline: 5px; }
+  .motion-phases button { padding-inline: 5px; }
+  .motion-phases button[data-ui-art] { padding-left: 35px; }
+  .motion-phases button > .ui-art-icon { left: 7px; width: 23px; height: 23px; }
+  .module-flow .action-route button small { overflow-wrap: anywhere; }
+}
