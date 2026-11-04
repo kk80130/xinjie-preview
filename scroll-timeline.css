@@ -25,3 +25,6 @@ html.visual-paused .story-sheet{transform:none!important}
 html.visual-paused .timeline-item{opacity:1;transform:none!important}
 html.visual-paused .story-scroll-hint{display:none}
 @media(prefers-reduced-motion:reduce){.story-scroll-hint{display:none}}
+/* 补充材料沿页面滚动阅读，底部提供明确返回，不再嵌套第二条滚动区域。 */
+.chapter-inline-close{display:inline-flex;align-items:center;min-height:44px;margin-top:20px;padding:9px 0;border:0;border-bottom:1px solid #a8b4ac;background:transparent;color:#4d6c73;font:14px/1.5 'Microsoft YaHei',sans-serif;cursor:pointer}
+.chapter-inline-close:focus-visible{outline:2px solid #476f79;outline-offset:4px}

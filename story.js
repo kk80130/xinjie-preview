@@ -85,7 +85,7 @@
       } else add(element);
     });
     const soundRoles = units.map((unit) => unit.matches(".story-title-line") || unit.querySelector("h3") ? 1 : unit.matches("button,fieldset,.lab-control,.story-actions") ? 2 : 0);
-    return { chapter, content, scene, sheet, title, narrative, titleIndex: units.findIndex((unit) => unit.classList.contains("story-title-line")), hint, units, soundRoles, centers: [], bounds: [], maxPan: 0, step: 1 };
+    return { chapter, content, scene, sheet, title, narrative, titleIndex: units.findIndex((unit) => unit.classList.contains("story-title-line")), hint, units, soundRoles, centers: [], bounds: [], maxPan: 0, step: 1, inlineReading: null };
   });
   const railNames = ["概念", "研究", "视觉", "动画", "流程", "制作", "反馈"];
   const railStages = timelines.map((timeline, index) => {
@@ -113,10 +113,14 @@
     timelines.forEach((timeline) => {
       const step = viewportHeight * (timeline.narrative ? .7 : .55);
       timeline.step = step;
-      timeline.chapter.style.height = isPaused() ? "auto" : `${(timeline.units.length + 1.5) * step + viewportHeight - header}px`;
+      // 详情只增加实际阅读距离，不把一整段补充材料再塞进半屏一项的揭示节奏。
+      const reading = timeline.inlineReading;
+      const extra = reading ? Math.max(0, reading.detail.offsetHeight - reading.detail.querySelector("summary").offsetHeight) : 0;
+      if (reading) reading.extra = extra;
+      timeline.chapter.style.height = isPaused() ? "auto" : `${(timeline.units.length + 1.5) * step + viewportHeight - header + extra}px`;
       const sheetRect = timeline.sheet.getBoundingClientRect();
       timeline.bounds = timeline.units.map((unit) => {
-        const rect = unit.getBoundingClientRect();
+        const rect = (unit.matches("details") ? unit.querySelector("summary") : unit).getBoundingClientRect();
         const transform = getComputedStyle(unit).transform;
         const matrix = transform === "none" ? null : new DOMMatrixReadOnly(transform);
         const shift = matrix ? matrix.m42 : 0;
@@ -185,9 +189,9 @@
     pathLength = 1;
     const railBox = route.getBoundingClientRect();
     railLeft = railBox.left; railScale = railBox.width / 84;
-    const range = Math.max(1, storyHeight - viewportHeight + cachedHeader);
+    const range = Math.max(1, storyHeight - inlineExtra() - viewportHeight + cachedHeader);
     railStages.forEach(({ timeline, marker }) => {
-      const position = Math.max(0, Math.min(1, (timeline.documentTop - storyTop) / range));
+      const position = Math.max(0, Math.min(1, (routeScroll(timeline.documentTop) - storyTop) / range));
       const point = railPoint(position);
       marker.setAttribute("x", String(point.x - 2.5));
       marker.setAttribute("y", String(point.y - 2.5));
@@ -195,11 +199,19 @@
     updateScroll(true);
   }
 
+  // 补充阅读不推进主线，展开高度变化也不会重新压缩双球所在的轨道位置。
+  function inlineExtra() { return isPaused() ? 0 : timelines.reduce((sum, timeline) => sum + (timeline.inlineReading?.extra || 0), 0); }
+  function routeScroll(position) {
+    return position - (isPaused() ? 0 : timelines.reduce((sum, timeline) => {
+      const reading = timeline.inlineReading;
+      return sum + (reading ? Math.max(0, Math.min(reading.extra, position - timeline.documentTop - reading.anchorOffset)) : 0);
+    }, 0));
+  }
   function paintRoute() {
     // 真实滚动位置直接映射进度，不按章节或文字项切换落点；反向操作沿原轨道即时回退。
     const start = storyTop - cachedHeader;
-    const range = Math.max(1, storyHeight - viewportHeight + cachedHeader);
-    const progress = Math.max(0, Math.min(1, (scrollY - start) / range));
+    const range = Math.max(1, storyHeight - inlineExtra() - viewportHeight + cachedHeader);
+    const progress = Math.max(0, Math.min(1, (routeScroll(scrollY) - start) / range));
     const entry = smooth((scrollY - start) / Math.max(80, viewportHeight * .16));
     const visible = storyWidth > 0 && scrollY > start && scrollY < storyTop + storyHeight;
     distance = progress;
@@ -275,7 +287,9 @@
       const rect = actualRect;
       // 远离视口的章节无需逐项写入样式；再次接近时由绝对滚动位置直接恢复，仍可逆。
       if (!paused && (rect.bottom < -viewportHeight || rect.top > viewportHeight * 2)) { timeline.soundReady = false; return; }
-      const cursor = Math.max(0, (cachedHeader - rect.top) / timeline.step);
+      const reading = timeline.inlineReading;
+      const cursor = reading ? reading.cursor : Math.max(0, (cachedHeader - rect.top) / timeline.step);
+      timeline.lastCursor = cursor;
       const indexNow = Math.min(units.length - 1, Math.floor(cursor));
       const phase = Math.max(0, Math.min(1, cursor - indexNow));
       const amount = isPaused() ? 1 : smooth(cursor / .7);
@@ -283,7 +297,7 @@
       const reveals = [];
       // 每项独占一段滚动距离，直接由位置求状态，倒滚严格按逆序收回。
       units.forEach((element, order) => {
-        const reveal = isPaused() ? 1 : smooth((cursor - order - .26) / .48);
+        const reveal = isPaused() || reading ? 1 : smooth((cursor - order - .26) / .48);
         reveals.push(reveal);
         const value = reveal.toFixed(4);
         if (element.style.getPropertyValue("--item-reveal") !== value) element.style.setProperty("--item-reveal", value);
@@ -294,7 +308,10 @@
       const center = timeline.centers[previous] + (timeline.centers[indexNow] - timeline.centers[previous]) * move;
       // 能装下一屏时整张模块保持静止；窄屏超长内容才需要阅读镜头。
       const fits = timeline.narrative || timeline.maxPan < 1;
-      const pan = isPaused() || fits ? 0 : Math.max(0, Math.min(timeline.maxPan, center - timeline.viewportHeight * .5));
+      const pan = paused ? 0 : reading ? Math.max(0, Math.min(timeline.maxPan,
+        reading.anchorPan + renderedScroll - timeline.documentTop - reading.anchorOffset)) :
+        fits ? 0 : Math.max(0, Math.min(timeline.maxPan, center - timeline.viewportHeight * .5));
+      timeline.lastPan = pan;
       // 声音沿用同一组显现进度；双阈值锁存防止边界轻微往返时连响。
       const soundFocused = rect.top <= cachedHeader + viewportHeight * .25 && rect.bottom > cachedHeader + viewportHeight * .25;
       if (!timeline.soundReady) {
@@ -330,9 +347,9 @@
       units[0].style.setProperty("--eyebrow-view", (isPaused() ? 1 : smooth((eyebrowTop - 8) / 16)).toFixed(4));
       if (timeline.narrative) window.uiNarrativeScene?.render(cursor, isPaused());
       // 双栏的控件位置不按纵向排列，整模块使用稳定落点，避免连线反复跳动。
-      const readCenter = fits ? timeline.padTop + timeline.sheetHeight * (timeline.narrative ? .62 : .5) : timeline.padTop + center - pan;
+      const readCenter = reading ? timeline.viewportHeight * .5 : fits ? timeline.padTop + timeline.sheetHeight * (timeline.narrative ? .62 : .5) : timeline.padTop + center - pan;
       content.style.setProperty("--read-center", `${readCenter.toFixed(3)}px`);
-      if (navigationPlayback?.timeline === timeline) {
+      if (reading || navigationPlayback?.timeline === timeline) {
         content.style.setProperty("--paper-top", "0px");
         content.style.setProperty("--paper-height", "100%");
         content.style.setProperty("--paper-origin", "50%");
@@ -353,7 +370,7 @@
         content.style.setProperty("--paper-origin", "50%");
       }
       chapter.dataset.timeline = cursor.toFixed(4);
-      timeline.hint.textContent = cursor > units.length + .4 ?
+      timeline.hint.textContent = reading ? "继续滚动阅读补充内容；末尾可收起" : cursor > units.length + .4 ?
         (index === timelines.length - 1 ? "向上滚动，逆序收回" : "继续滚动，进入下一章") : "继续滚动，逐项展开；下划线文字可点击";
     });
     // 同帧跨过多组只响一次，已经越过的内容不进入声音队列。
@@ -511,6 +528,10 @@
     navigate(id) {
       const timeline = timelines.find((item) => item.chapter.id === id);
       if (!timeline) return false;
+      if (timeline.inlineReading) {
+        const detail = timeline.inlineReading.detail;
+        timeline.inlineReading = null; detail.open = false; timeline.content.style.height = "";
+      }
       layoutRoute();
       const from = 1.8, to = timeline.units.length + .8;
       navigationPlayback = isPaused() ? null : {
@@ -526,6 +547,41 @@
       else { lastTime = 0; layoutRoute(); updateScroll(true); }
     }
   };
+  timelines.forEach((timeline) => {
+    timeline.sheet.querySelectorAll("details.chapter-more, details.system-details").forEach((detail) => {
+      const summary = detail.querySelector("summary");
+      const close = document.createElement("button");
+      close.type = "button"; close.className = "chapter-inline-close"; close.textContent = "收起补充内容 ↑";
+      close.addEventListener("click", () => { detail.open = false; summary.focus({ preventScroll: true }); });
+      detail.append(close);
+      let beforeOpen = null;
+      summary.addEventListener("click", () => {
+        if (!detail.open) beforeOpen = { anchorOffset: scrollY - timeline.documentTop,
+          anchorPan: timeline.lastPan || 0, cursor: timeline.lastCursor || 0, height: timeline.viewportHeight };
+      });
+      detail.addEventListener("toggle", () => {
+        if (detail.open) {
+          navigationPlayback = null;
+          // 固定打开前的阅读窗口，避免详情撑高内容面后把当前点击位置抬走。
+          const saved = beforeOpen || { anchorOffset: scrollY - timeline.documentTop,
+            anchorPan: timeline.lastPan || 0, cursor: timeline.lastCursor || 0, height: timeline.viewportHeight };
+          beforeOpen = null;
+          timeline.inlineReading = { detail, anchorOffset: saved.anchorOffset,
+            anchorPan: saved.anchorPan, cursor: Math.max(timeline.units.length + .8, saved.cursor), extra: 0 };
+          if (!isPaused()) timeline.content.style.height = `${saved.height}px`;
+          renderedScroll = wantedScroll = scrollY;
+          layoutRoute();
+        } else if (timeline.inlineReading?.detail === detail) {
+          const reading = timeline.inlineReading;
+          timeline.inlineReading = null; timeline.content.style.height = "";
+          layoutRoute();
+          // 收起是显式返回原章节位置，不按缩短后的页面高度误落到下一章。
+          if (!isPaused()) window.scrollTo({ top: timeline.documentTop + reading.anchorOffset, behavior: "instant" });
+          updateScroll(true);
+        }
+      });
+    });
+  });
   const interruptNavigation = () => { if (navigationPlayback) { navigationPlayback = null; updateScroll(true); } };
   window.addEventListener("wheel", interruptNavigation, { passive: true });
   window.addEventListener("touchstart", interruptNavigation, { passive: true });
@@ -544,10 +600,10 @@
   const trust = document.getElementById("labTrust"), doubt = document.getElementById("labDoubt");
   const presets = { neutral: [25, 20], trust: [85, 15], doubt: [20, 85], conflict: [85, 85] };
   const captions = {
-    neutral: "保持距离，信息清晰，情绪尚未靠近。",
-    trust: "暖色与舒展的形态表达亲近，文字内容保持相同。",
-    doubt: "青灰与收紧的轮廓表达警觉，文字内容保持相同。",
-    conflict: "温暖与冷硬线索同时出现，表达想相信又察觉异常。"
+    neutral: "轮廓疏朗，彼此留一点距离。",
+    trust: "边界舒展，连接轻轻靠近；对话仍是原来的话。",
+    doubt: "轮廓收紧，张力增加；对话内容没有改变。",
+    conflict: "靠近与张力同时存在，视觉线索并不只有一种。"
   };
   function updateLab() {
     const t = Number(trust.value), d = Number(doubt.value);
@@ -593,7 +649,7 @@
     document.getElementById("metricRate").textContent = evidence.started ? `${Math.round(evidence.completed / evidence.started * 100)}%` : "—";
     document.getElementById("metricRateLabel").textContent = evidence.started ? `完成率 · 开始 ${evidence.started} 局` : "尚未开始对局";
     document.getElementById("evidenceStorageNote").textContent = persistent ?
-      "上方数字只属于当前浏览器；已提交反馈由设计者另行汇总，不代表全站浏览量或独立人数。" : "当前浏览器无法保存，数字仅在本次打开期间保留。";
+      "记录和反馈只属于当前浏览器，不代表全站浏览量或独立人数；可导出本机记录。" : "当前浏览器无法保存，数字仅在本次打开期间保留。";
     const list = document.getElementById("feedbackList"); list.replaceChildren();
     evidence.feedback.slice(-3).reverse().forEach((item) => {
       const entry = document.createElement("p");
@@ -625,6 +681,8 @@
       evidence.feedback = evidence.feedback.slice(-40); lastFeedback = signature; updateEvidence();
     }
     const output = document.getElementById("feedbackStatus"), submit = form.querySelector('[type="submit"]');
+    if (!window.uiRecords) { output.textContent = "接收功能未加载，反馈仅保留在本机。刷新后可重试。"; return; }
+    // Pages 没有接收后台，沿用本机保存结果，不发起远程提交。
     if (!window.uiRecords?.sendFeedback) { output.textContent = "反馈已保存在当前浏览器，可导出本机记录。"; return; }
     submit.disabled = true; output.textContent = "正在提交给设计者…";
     try {

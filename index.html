@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="xinjie-release" content="20261104-chapters-navigation-shapeforms">
   <meta name="description" content="信界 / You&I：一场发生在旧物私聊里的信任游戏。了解交互设计，或进入网页原型试玩一局。">
   <title>信界 / You&I · 旧物私聊信任游戏</title>
   <link rel="stylesheet" href="styles.css?v=20261013-ui16">
   <link rel="stylesheet" href="visual.css?v=20261013-9">
   <link rel="stylesheet" href="story.css?v=20261013-orbit6">
   <link rel="stylesheet" href="route-cinematic.css?v=20261013-orbit6">
-  <link rel="stylesheet" href="scroll-timeline.css?v=20261015-linked27">
+  <link rel="stylesheet" href="scroll-timeline.css?v=20261104">
   <link rel="stylesheet" href="ink-reading.css?v=20261013-ink15">
   <link rel="stylesheet" href="reading-design.css?v=20261015-linked27">
   <link rel="stylesheet" href="narrative-scene.css?v=20261015-linked27">
@@ -20,9 +21,10 @@
   <link rel="stylesheet" href="progress-rail.css?v=20261015-linked27">
   <link rel="stylesheet" href="art-direction.css?v=20261021-art33">
   <link rel="stylesheet" href="game-art.css?v=20261021-art32">
-  <link rel="stylesheet" href="chapter-art.css?v=20261021-art32">
+  <link rel="stylesheet" href="chapter-art.css?v=20261103-reading">
   <link rel="stylesheet" href="match.css?v=20261101-fit-layout">
   <link rel="stylesheet" href="site-audio.css?v=20261026-auto36">
+  <link rel="stylesheet" href="reading-composition.css?v=20261104">
 </head>
 <body>
   <a class="skip-link" href="#main-content">跳到主要内容</a>
@@ -162,39 +164,35 @@
       <section class="view story-chapter" id="research" data-view="research" data-story-chapter aria-labelledby="research-title">
 <span class="story-anchor" aria-hidden="true"></span>
 <div class="story-content module-designed module-research">
-<p class="story-eyebrow"><span class="chapter-index">02 / WHAT YOU CAN SEE</span><span>研究命题</span></p>
-<h2 class="story-title" id="research-title">你看见回应，<br>看不见底牌。</h2>
-<p class="story-lead">双方都能靠近，也都能有所保留。判断来自聊天留下的线索，而不是一个公开的可信分数。</p>
-<div class="story-plane information-spread" aria-label="对局中的可见信息与隐藏信息">
-<div class="information-face"><span class="module-caption">FACE UP / 可见</span><p class="specimen-message">“我可以再解释一次。”</p><p>物品描述与报价<br>双方钱包、自己的旧物成色</p></div>
-<div class="information-back"><span class="module-caption">FACE DOWN / 未知</span><div class="cardback-pair" aria-hidden="true"><i></i><i></i></div><p>对方物品的真实成色<br>尚未揭晓的说法与意图</p></div>
+<p class="story-eyebrow"><span class="chapter-index">02 / THE OTHER SIDE</span><span>研究命题</span></p>
+<h2 class="story-title" id="research-title">同一件旧物，<br>两边的信息不同。</h2>
+<p class="story-lead">你收到的是描述，真实成色还在对方手里。</p>
+<div class="story-plane object-study" data-revealed="false">
+<figure class="object-illustration"><svg class="camera-drawing" viewBox="0 0 320 220" role="img" aria-label="胶片相机的轮廓与待核对的边角"><ellipse cx="162" cy="126" rx="136" ry="65" fill="none" stroke="currentColor" opacity=".18" transform="rotate(-18 162 126)"/><path d="M55 82h52l13-22h72l15 22h57v103H55Z" fill="var(--object-paper, #f5eee3)" stroke="currentColor" stroke-width="2"/><path d="M57 103h207M75 91h26M215 92h24" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="159" cy="135" r="48" fill="var(--object-paper, #f5eee3)" stroke="currentColor" stroke-width="2"/><circle cx="159" cy="135" r="33" fill="none" stroke="currentColor" opacity=".55"/><circle cx="159" cy="135" r="23" fill="none" stroke="currentColor"/><path d="m142 120 30 30m-33-15h40m-20-20v40" stroke="currentColor" opacity=".2"/><path class="camera-scuff" d="m57 158 17 9m-18 1 11 5m182 3 14-10" fill="none" stroke="#cf765c" stroke-width="3" stroke-linecap="round"/><path d="M49 190h40m-20-9v18M248 62h29m-14-14v29" fill="none" stroke="currentColor" opacity=".3"/></svg><figcaption>胶片相机 <span>游戏案例</span></figcaption></figure>
+<div class="object-observation"><div class="object-description"><span class="module-caption">卖家描述</span><p>边角没掉漆，<br>快门测光正常。</p></div><div class="object-truth"><span class="module-caption">实际情况</span><p id="objectTruth" aria-live="polite">尚未核对<span aria-hidden="true"> · · ·</span></p></div><button class="object-reveal" type="button" data-object-reveal aria-pressed="false">看一眼实拍 <span aria-hidden="true">↗</span></button></div>
+<p class="object-study-note">局部示例，不计入对局。实际游戏中，核对也有代价。</p>
 </div>
-<div class="story-plane"><div class="story-questions compact-questions" aria-label="展开研究问题">
-<button type="button" data-detail="question-trust"><span class="question-number">01</span><span class="question-copy"><strong>界面的表情，会改变判断吗？</strong></span><span aria-hidden="true">↗</span></button>
-<button type="button" data-detail="question-risk"><span class="question-number">02</span><span class="question-copy"><strong>看过实拍，你会怎样决定？</strong></span><span aria-hidden="true">↗</span></button>
-<button type="button" data-detail="question-cost"><span class="question-number">03</span><span class="question-copy"><strong>有了投入，还愿意停下来吗？</strong></span><span aria-hidden="true">↗</span></button>
-</div></div>
-<div class="story-actions"><button class="story-link" type="button" data-detail="research-plan">查看测试方法 ↗</button><span class="module-note">以上为待验证问题，尚无研究结论。</span></div>
+<details class="chapter-more"><summary>我们想研究什么</summary><div class="chapter-more-body">
+<div class="story-questions compact-questions" aria-label="展开研究问题"><button type="button" data-detail="question-trust"><span>01</span><span class="question-copy"><strong>界面会改变判断吗？</strong></span><span aria-hidden="true">↗</span></button><button type="button" data-detail="question-risk"><span>02</span><span class="question-copy"><strong>看过实拍之后呢？</strong></span><span aria-hidden="true">↗</span></button><button type="button" data-detail="question-cost"><span>03</span><span class="question-copy"><strong>有了投入，还愿意停下吗？</strong></span><span aria-hidden="true">↗</span></button></div>
+<div class="story-actions"><button class="story-link" type="button" data-detail="research-plan">查看测试方法 ↗</button></div><p class="module-note">这些是待验证的问题，尚无研究结论。</p></div></details>
 </div>
       </section>
       <section class="view story-chapter" id="system" data-view="system" data-story-chapter aria-labelledby="system-title">
 <span class="story-anchor" aria-hidden="true"></span>
 <div class="story-content module-designed module-system">
 <p class="story-eyebrow"><span class="chapter-index">03 / A LANGUAGE OF RELATION</span><span>视觉系统</span></p>
-<h2 class="story-title" id="system-title">同一套界面，<br>留下不同线索。</h2>
-<p class="story-lead">双球区分主体，连线保留关系，消息和旧物承接行动。颜色不判善恶，文字与轮廓一起说明状态。</p>
-<div class="story-plane visual-specimens" aria-label="视觉材料标本">
-<div><span class="module-caption">MESSAGE / 对话</span><p class="specimen-message">先听你说完。</p></div>
-<div><span class="module-caption">WORD CARD / 行动</span><div class="specimen-word"><span>信息牌</span><strong>提出核对</strong><small>让回应多一点依据</small></div></div>
-<div><span class="module-caption">RECEIPT / 结果</span><div class="specimen-receipt"><span>五单之后</span><strong>双方钱包 · 共同增长</strong><small>逐单复盘描述与真实成色</small></div></div>
-</div>
+<h2 class="story-title" id="system-title">同一句话，<br>换个样子呢？</h2>
+<p class="story-lead">内容不变，看看界面的距离如何变化。</p>
 <div class="story-plane visual-lab" id="visualLab" data-state="neutral">
-<div class="lab-preview"><div class="lab-contact">STATE STUDY / 四种状态</div><p class="lab-bubble">最近搬家，想把这台胶片相机转出去。</p><p class="lab-caption" id="labCaption" aria-live="polite">保持距离，信息清晰，情绪尚未靠近。</p></div>
-<div class="lab-presets" aria-label="选择视觉状态"><button type="button" data-lab-state="neutral" aria-pressed="true">保持距离</button><button type="button" data-lab-state="trust" aria-pressed="false">关系升温</button><button type="button" data-lab-state="doubt" aria-pressed="false">产生怀疑</button><button type="button" data-lab-state="conflict" aria-pressed="false">想信又疑</button></div>
-<div class="lab-controls"><label for="labTrust">信任表达 <output id="labTrustValue">25</output><input id="labTrust" type="range" min="0" max="100" value="25"></label><label for="labDoubt">怀疑表达 <output id="labDoubtValue">20</output><input id="labDoubt" type="range" min="0" max="100" value="20"></label></div>
-<p class="evidence-note">仅调整设计表达，不读取对方真实心理；两种状态可以同时升高。</p>
+<div class="lab-preview"><div class="lab-contact"><span class="lab-avatar" aria-hidden="true">林</span><span>林谙<small>关于这台旧相机</small></span><span class="lab-contact-orbit" aria-hidden="true">◎</span></div><div class="lab-conversation"><span class="lab-time">今天 09:41</span><p class="lab-bubble">最近搬家，想把这台胶片相机转出去。</p><p class="lab-reply">可以再看看细节吗？</p><span class="lab-connection" aria-hidden="true"><i></i><i></i></span></div><p class="lab-caption" id="labCaption" aria-live="polite">轮廓疏朗，彼此留一点距离。</p></div>
+<div class="lab-presets" aria-label="比较同一段对话的两种呈现"><button type="button" data-lab-state="neutral" aria-pressed="true">A · 留出距离</button><button type="button" data-lab-state="trust" aria-pressed="false">B · 轻轻靠近</button></div>
+<p class="evidence-note">哪一种让你更愿意继续聊？颜色不代表真实意图。</p>
 </div>
-<div class="story-actions"><button class="story-link" type="button" data-detail="visual-point">点：主体 ↗</button><button class="story-link" type="button" data-detail="visual-line">线：关系 ↗</button><button class="story-link" type="button" data-detail="visual-plane">面：信息 ↗</button></div>
+<details class="system-details chapter-more"><summary>看看这套视觉语言</summary>
+<div class="visual-specimens" aria-label="视觉材料标本"><div><span class="module-caption">对话</span><p class="specimen-message">先听你说完。</p></div><div><span class="module-caption">行动</span><div class="specimen-word"><strong>提出核对</strong><small>让回应多一点依据</small></div></div><div><span class="module-caption">结果</span><div class="specimen-receipt"><strong>双方钱包</strong><small>逐单复盘描述与真实成色</small></div></div></div>
+<div class="lab-controls"><label for="labTrust">靠近程度 <output id="labTrustValue">25</output><input id="labTrust" type="range" min="0" max="100" value="25"></label><label for="labDoubt">轮廓张力 <output id="labDoubtValue">20</output><input id="labDoubt" type="range" min="0" max="100" value="20"></label></div>
+<div class="story-actions"><button class="story-link" type="button" data-detail="visual-point">点 · 主体 ↗</button><button class="story-link" type="button" data-detail="visual-line">线 · 关系 ↗</button><button class="story-link" type="button" data-detail="visual-plane">面 · 信息 ↗</button></div>
+</details>
 </div>
       </section>
       <section class="view story-chapter" id="motion" data-view="motion" data-story-chapter aria-labelledby="motion-title">
@@ -202,81 +200,78 @@
 <div class="story-content module-designed module-motion">
 <p class="story-eyebrow"><span class="chapter-index">04 / BEFORE · DURING · AFTER</span><span>动画设计</span></p>
 <h2 class="story-title" id="motion-title">靠近有准备，<br>离开有余韵。</h2>
-<p class="story-lead">预备交代方向，牵引传达力度，错峰回弹让回应继续。开场、滚动和鼠标交互都沿用这套动作规范。</p>
+<p class="story-lead">先拉开，再靠近。看同一组双球怎样交代动作。</p>
 <div class="story-plane"><div class="motion-study"><canvas id="motionStudyCanvas" aria-label="双球局部动画演示"></canvas></div>
 <div class="motion-phases" aria-label="选择局部动画"><button type="button" data-motion-phase="growth" aria-pressed="true">线框生长</button><button type="button" data-motion-phase="anticipation" aria-pressed="false">蓄力牵引</button><button type="button" data-motion-phase="rebound" aria-pressed="false">重叠回弹</button><button type="button" data-motion-phase="settle" aria-pressed="false">弧线收束</button></div>
 <p class="motion-status" id="motionStatus" aria-live="polite">点选动作单独观看；暂停时保留静止姿势。</p></div>
-<div class="story-plane motion-poses" aria-label="动作设计的三个关键姿势">
+<details class="chapter-more"><summary>动作背后的设计</summary><div class="chapter-more-body"><div class="motion-poses" aria-label="动作设计的三个关键姿势">
 <div><span class="pose-symbol pose-before" aria-hidden="true"><i></i><i></i></span><strong>预备</strong><p>短暂拉开，让靠近有方向。</p></div>
 <div><span class="pose-symbol pose-during" aria-hidden="true"><i></i><i></i></span><strong>接触</strong><p>挤压与拉伸，保持体积感。</p></div>
 <div><span class="pose-symbol pose-after" aria-hidden="true"><i></i><i></i></span><strong>收束</strong><p>次要动作随后停下，内容留稳。</p></div>
 </div>
-<div class="story-actions"><button class="story-link" type="button" data-detail="animation-principles">十二条原则与交互规范 ↗</button><button class="story-link" type="button" id="replayWholeIntro">重播完整开场 ↗</button></div>
+<div class="story-actions"><button class="story-link" type="button" data-detail="animation-principles">十二条原则与交互规范 ↗</button><button class="story-link" type="button" id="replayWholeIntro">重播完整开场 ↗</button></div></div></details>
 </div>
       </section>
       <section class="view story-chapter" id="flow" data-view="flow" data-story-chapter aria-labelledby="flow-title">
 <span class="story-anchor" aria-hidden="true"></span>
 <div class="story-content module-designed module-flow">
-<p class="story-eyebrow"><span class="chapter-index">05 / FROM CONTACT TO CONSEQUENCE</span><span>交互流程</span></p>
-<h2 class="story-title" id="flow-title">先说一句话，<br>再承担一次选择。</h2>
-<p class="story-lead">每单都从一件旧物开始。卖家描述，买家判断；担保放大得失，实拍揭开成色。五单交替之后，重新看清这桌交易。</p>
-<div class="story-plane flow-nodes action-route" aria-label="一单四步与一局循环，点击查看规则">
-<button type="button" data-detail="flow-briefing"><span>01 / CHOOSE</span><strong>选人入场</strong><small>对手 · 特质</small></button>
-<button type="button" data-detail="flow-stake"><span>02 / LIST</span><strong>挂出旧物</strong><small>三件里选一件</small></button>
-<button type="button" data-detail="flow-contact"><span>03 / DESCRIBE</span><strong>给出描述</strong><small>如实说，或抬高</small></button>
-<button type="button" data-detail="flow-trust"><span>04 / RESPOND</span><strong>买家回应</strong><small>四主动作与砍价</small></button>
-<button type="button" data-detail="flow-probe"><span>DETAIL / PHOTO</span><strong>实拍与担保</strong><small>核对成色，放大筹码</small></button>
-<button type="button" data-detail="flow-transfer"><span>DEAL / RECEIPT</span><strong>本单结算</strong><small>成交或离场的代价</small></button>
-<button type="button" data-detail="flow-cashout"><span>NEXT / SWITCH</span><strong>交换身份</strong><small>五单轮流当卖家</small></button>
-<button type="button" data-detail="flow-settlement"><span>REVIEW / REVEAL</span><strong>局末复盘</strong><small>比较钱包，揭晓真相</small></button>
+<p class="story-eyebrow"><span class="chapter-index">05 / YOUR MOVE</span><span>交互流程</span></p>
+<h2 class="story-title" id="flow-title">从一件旧物，<br>到一次决定。</h2>
+<p class="story-lead">你们轮流描述、判断，也轮流承担结果。</p>
+<div class="story-plane trade-path" aria-label="一单交易的四个步骤，点击查看详情">
+<button class="trade-step" type="button" data-detail="flow-stake"><span class="trade-symbol trade-symbol-object" aria-hidden="true"><i></i><i></i></span><span class="module-caption">01 / LIST</span><strong>选一件旧物</strong><small>三件里选一件</small></button>
+<button class="trade-step" type="button" data-detail="flow-contact"><span class="trade-symbol trade-symbol-message" aria-hidden="true"><i></i><i></i></span><span class="module-caption">02 / DESCRIBE</span><strong>给出描述</strong><small>说法由卖家决定</small></button>
+<button class="trade-step" type="button" data-detail="flow-trust"><span class="trade-symbol trade-symbol-choice" aria-hidden="true"><i></i><i></i></span><span class="module-caption">03 / RESPOND</span><strong>作出回应</strong><small>成交、核对或离场</small></button>
+<button class="trade-step" type="button" data-detail="flow-transfer"><span class="trade-symbol trade-symbol-receipt" aria-hidden="true"><i></i><i></i></span><span class="module-caption">04 / SETTLE</span><strong>承担结果</strong><small>本单得失记入钱包</small></button>
 </div>
-<div class="story-plane flow-receipt"><span class="module-caption">SETTLEMENT / 结算依据</span><p><strong>实际成色</strong><span>×</span><strong>价格与倍率</strong><span>→</span><strong>双方得失</strong></p><small>每单按实际成色、价格与倍率结算；五单后比较钱包，同时记录共同增长。全部使用游戏货币。</small></div>
-<div class="story-actions"><button class="story-link" type="button" data-prepare-match>进入对局 ↗</button><button class="story-link" type="button" data-detail="deliverable-scope">当前原型范围 ↗</button></div>
+<div class="trade-loop" aria-label="一局五单，双方交替担任卖家"><span>卖家</span><div aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><span>买家</span><p>五单换位 · 局末揭晓真相</p></div>
+<div class="story-actions"><button class="story-link" type="button" data-prepare-match>亲自试一局 ↗</button></div>
+<details class="chapter-more"><summary>核对、担保与结算</summary><div class="chapter-more-body"><div class="story-actions"><button class="story-link" type="button" data-detail="flow-probe">实拍与担保 ↗</button><button class="story-link" type="button" data-detail="flow-cashout">身份交换 ↗</button><button class="story-link" type="button" data-detail="flow-settlement">局末复盘 ↗</button><button class="story-link" type="button" data-detail="flow-briefing">进入之前 ↗</button></div><p>成交、实拍、担保、退出和砍价有各自的后果。所有金额均为游戏货币。</p><button class="story-link" type="button" data-detail="deliverable-scope">当前原型范围 ↗</button></div></details>
 </div>
       </section>
       <section class="view story-chapter" id="process" data-view="process" data-story-chapter aria-labelledby="process-title">
 <span class="story-anchor" aria-hidden="true"></span>
 <div class="story-content module-designed module-process">
-<p class="story-eyebrow"><span class="chapter-index">06 / DECISIONS &amp; EVIDENCE</span><span>制作过程</span></p>
-<h2 class="story-title" id="process-title">画面为什么<br>长成这样？</h2>
-<p class="story-lead">从关系的可见痕迹出发，把抽象命题落在消息、旧物与选择里。每次调整既要看画面，也要看操作是否说得通。</p>
-<div class="story-plane process-records design-decisions">
-<div><span>CONTINUITY / 连续</span><h3>一条线，贯穿观看与操作。</h3><p>双球沿线进入内容；回滚沿同一进度收回。章节有变化，关系不另起一段。</p></div>
-<div><span>HIERARCHY / 主从</span><h3>先看见线索，再读说明。</h3><p>消息、牌背和凭据承担主要信息；规则与依据留在可展开的详情里。</p></div>
-<div><span>CONSEQUENCE / 后果</span><h3>让按钮带来可解释的回应。</h3><p>描述形成报价，回应改变交易，结算留下得失。实拍与复盘让说法和成色重新对齐。</p></div>
-</div>
-<div class="story-plane implementation-ledger" aria-label="当前作品状态">
-<div><span class="status-mark" aria-hidden="true">●</span><strong>已具备</strong><p>连续网页、状态实验、局部动画与可试玩对局。</p></div>
-<div><span class="status-mark pending" aria-hidden="true">○</span><strong>待验证</strong><p>真实体验的理解与误操作、设备流畅度、数值平衡。</p></div>
-</div>
-<div class="story-actions"><button class="story-link" type="button" data-detail="course-process">课程成果与制作边界 ↗</button><button class="story-link" type="button" data-detail="research-plan">查看测试计划 ↗</button></div>
+<p class="story-eyebrow"><span class="chapter-index">06 / MAKING ROOM</span><span>制作过程</span></p>
+<h2 class="story-title" id="process-title">让画面讲，<br>给阅读留一点空间。</h2>
+<p class="story-lead">把并列的说明，整理成主画面与可展开的细节。</p>
+<div class="story-plane design-proof" aria-label="本轮信息组织调整示意">
+<div class="proof-panel before"><span class="module-caption">调整前 · 多处同时解释</span><div class="proof-drawing proof-lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>标本、滑杆、状态与说明同时出现。</p></div>
+<div class="proof-panel after"><span class="module-caption">现在 · 先看，再展开</span><div class="proof-drawing proof-hierarchy" aria-hidden="true"><i></i><i></i><i></i></div><p>一个主演示，细节留给下一次点击。</p></div>
+</div><p class="module-note proof-note">信息组织示意，来自本轮章节调整。</p>
+<details class="chapter-more"><summary>设计取舍与制作边界</summary><div class="chapter-more-body"><div class="design-decisions"><div><h3>连接始终在场</h3><p>保留双球与曲线轨道，让章节变化仍有连续的来路。</p></div><div><h3>操作带来回应</h3><p>形态、文字和动态一起说明当前状态，细节服务于辨认和使用。</p></div></div><div class="implementation-ledger" aria-label="当前作品状态"><div><span class="status-mark" aria-hidden="true">●</span><strong>已具备</strong><p>连续网页、局部演示与可试玩对局。</p></div><div><span class="status-mark pending" aria-hidden="true">○</span><strong>待验证</strong><p>真人理解、设备流畅度与数值平衡。</p></div></div><div class="story-actions"><button class="story-link" type="button" data-detail="course-process">制作记录 ↗</button><button class="story-link" type="button" data-detail="research-plan">测试计划 ↗</button></div></div></details>
 </div>
       </section>
       <section class="view story-chapter" id="deliverables" data-view="deliverables" data-story-chapter aria-labelledby="deliverables-title">
         <span class="story-anchor" aria-hidden="true"></span>
-        <div class="story-content">
+        <div class="story-content module-designed module-feedback">
           <p class="story-eyebrow"><span class="chapter-index">07 / AFTER THE GAME</span><span>体验反馈</span></p>
           <h2 class="story-title" id="deliverables-title">这一局之后，<br>你怎么想？</h2>
-          <p class="story-lead">哪一句话、哪个动作，让你改变了决定？可以写下让你犹豫或没看懂的地方，反馈会用于下一轮修改。</p>
-          <div class="story-plane"><div class="evidence-grid" aria-label="当前浏览器的体验记录">
-            <div><strong class="evidence-value" id="metricViews">0</strong><span>浏览打开次数</span></div><div><strong class="evidence-value" id="metricEntry">0</strong><span>进入按钮点击</span></div><div><strong class="evidence-value" id="metricCompleted">0</strong><span>完成对局</span></div><div><strong class="evidence-value" id="metricRate">—</strong><span id="metricRateLabel">尚未开始对局</span></div>
-          </div><p class="evidence-note" id="evidenceStorageNote">上方数字属于当前浏览器；已提交反馈由设计者另行汇总。</p>
-          <form class="feedback-form" id="storyFeedback"><fieldset><legend>这个界面让你对对方有什么感受？</legend><label><input type="radio" name="impression" value="willing" required>更愿意相信</label><label><input type="radio" name="impression" value="cautious">更谨慎</label><label><input type="radio" name="impression" value="uncertain">说不清</label></fieldset><label for="feedbackComment">哪个细节影响了你？<textarea id="feedbackComment" name="comment" maxlength="280" rows="3" placeholder="例如某次等待、聊天气泡的变化，或一次要实拍的回应。"></textarea></label><p class="feedback-notice">反馈仅保存在当前浏览器，可通过“导出本机记录”留存。请勿填写姓名、电话等个人信息。</p><div class="feedback-submit"><button class="story-link" type="submit">保存到本机 ↗</button><output id="feedbackStatus" aria-live="polite"></output></div></form>
+          <p class="story-lead">哪一个细节，让你改变了决定？</p>
+          <div class="story-plane feedback-main"><form class="feedback-form" id="storyFeedback"><fieldset><legend>这个界面让你对对方有什么感受？</legend><label><input type="radio" name="impression" value="willing" required>更愿意相信</label><label><input type="radio" name="impression" value="cautious">更谨慎</label><label><input type="radio" name="impression" value="uncertain">说不清</label></fieldset><label for="feedbackComment">哪个细节影响了你？<textarea id="feedbackComment" name="comment" maxlength="280" rows="3" placeholder="例如某次等待、聊天气泡的变化，或一次要实拍的回应。"></textarea></label><p class="feedback-notice">反馈仅保存在当前浏览器，可通过“导出本机记录”留存。请勿填写姓名、电话等个人信息。</p><div class="feedback-submit"><button class="story-link" type="submit">保存到本机 ↗</button><output id="feedbackStatus" aria-live="polite"></output></div></form>
           <p class="remote-records-note" data-records-status role="status">静态预览版：记录仅保存在当前浏览器。</p>
-          <div class="feedback-list" id="feedbackList" aria-label="最近的本机反馈"></div></div>
-          <div class="story-actions"><button class="story-link" type="button" data-detail="metrics-method">查看统计口径 ↗</button><button class="story-link" type="button" id="exportEvidence">导出本机记录 ↗</button><button class="story-link" type="button" data-detail="research-plan">查看后续测试计划 ↗</button><button class="story-link" type="button" data-detail="course-process">课程与制作过程 ↗</button></div>
+          </div>
+<details class="chapter-more"><summary>本机记录与后续计划</summary><div class="chapter-more-body"><div class="evidence-grid" aria-label="当前浏览器的体验记录">
+            <div><strong class="evidence-value" id="metricViews">0</strong><span>浏览打开次数</span></div><div><strong class="evidence-value" id="metricEntry">0</strong><span>进入按钮点击</span></div><div><strong class="evidence-value" id="metricCompleted">0</strong><span>完成对局</span></div><div><strong class="evidence-value" id="metricRate">—</strong><span id="metricRateLabel">尚未开始对局</span></div>
+          </div><p class="evidence-note" id="evidenceStorageNote">记录和反馈只属于当前浏览器，不代表全站浏览量或独立人数。</p>
+          <div class="feedback-list" id="feedbackList" aria-label="最近的本机反馈"></div><div class="story-actions"><button class="story-link" type="button" data-detail="metrics-method">统计口径 ↗</button><button class="story-link" type="button" id="exportEvidence">导出本机记录 ↗</button><button class="story-link" type="button" data-detail="research-plan">后续测试 ↗</button><button class="story-link" type="button" data-detail="course-process">制作记录 ↗</button></div></div></details>
         </div>
       </section>
-      <footer class="story-footer"><p>信界 / YOU &amp; I<br>毕业设计作品 · 可试玩网页原型<small class="sound-credit">Sounds by <a href="https://jdsherbert.itch.io/ultimate-ui-sfx-pack" target="_blank" rel="noopener noreferrer">JDSherbert</a></small></p><button type="button" data-view-target="home">回到起点 ↑</button></footer>
+      <footer class="story-footer"><p>信界 / YOU &amp; I<br>毕业设计作品 · 可试玩网页原型<small class="sound-credit">Sounds by <a href="https://www.shapeforms.com/" target="_blank" rel="noopener noreferrer">Shapeforms Audio</a></small></p><button type="button" data-view-target="home">回到起点 ↑</button></footer>
     </div>
   </main>
+
+  <div class="mobile-shortcuts" aria-label="手机快捷导航" hidden>
+    <button type="button" data-view-target="home"><span aria-hidden="true">↖</span> 首页</button>
+    <details class="mobile-chapter-menu"><summary><span id="mobileCurrentChapter">章节</span><span aria-hidden="true">⌃</span></summary><nav aria-label="跳转到章节"><button type="button" data-view-target="concept">项目概念</button><button type="button" data-view-target="research">研究命题</button><button type="button" data-view-target="system">视觉系统</button><button type="button" data-view-target="motion">动画设计</button><button type="button" data-view-target="flow">交互流程</button><button type="button" data-view-target="process">制作过程</button><button type="button" data-view-target="deliverables">体验反馈</button></nav></details>
+  </div>
 
   <dialog class="story-detail" id="storyDetail" aria-labelledby="detailTitle" aria-describedby="detailKicker">
     <div class="detail-shell"><header class="detail-header"><p id="detailKicker"></p><h2 id="detailTitle"></h2><button type="button" data-close-detail aria-label="关闭详情">×</button></header><div id="detailBody" class="detail-body"></div></div>
   </dialog>
   <script src="story-content.js?v=20261015-linked27"></script>
   <script src="records-client.js?v=20261015-linked27"></script>
-  <script src="site-audio.js?v=20261026-auto36"></script>
+  <script src="site-audio.js?v=20261104-shapeforms"></script>
   <script src="match-content.js?v=20261031-redesign"></script>
   <script src="match-rules.js?v=20261031-redesign"></script>
   <script src="app.js?v=20261015-linked27"></script>
@@ -286,9 +281,10 @@
   <script src="ink-interactions.js?v=20261013-ink15"></script>
   <script src="narrative-scene.js?v=20261015-linked27"></script>
   <script src="reading-input.js?v=20261015-linked27"></script>
-  <script src="story.js?v=20261015-linked27"></script>
+  <script src="story.js?v=20261104"></script>
   <script src="interaction-motion.js?v=20261015-linked27"></script>
   <script src="detail-explorer.js?v=20261015-linked27"></script>
   <script src="ui-art.js?v=20261021-art32"></script>
+  <script src="chapter-interactions.js?v=20261104"></script>
 </body>
 </html>

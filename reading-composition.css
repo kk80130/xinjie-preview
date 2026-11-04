@@ -1,0 +1,508 @@
+/* 本轮把解释集中在主图，次级材料沿同一章节展开；尺寸不参与滚动进度计算。 */
+#story {
+  --reading-paper: #f7f2e9;
+  --reading-ink: #2d2925;
+  --reading-muted: #786e63;
+  --reading-warm: #cf765c;
+  --reading-cool: #6b8790;
+  --reading-rule: #c9bdaa;
+  --reading-edge: #b0bcb6;
+}
+
+#story .story-chapter .story-content.module-designed {
+  width: min(1000px, 74%);
+  margin-left: 22%;
+  height: auto;
+  max-height: calc(var(--story-viewport-height, 100svh) - var(--reader-top, 0px) - 64px);
+  padding: clamp(22px, 2.5vw, 36px) clamp(24px, 3.2vw, 46px);
+  color: var(--reading-ink);
+}
+#story .module-designed::before {
+  border: 1px solid #c9bdaa70;
+  border-left-color: #6b87905c;
+  border-radius: 2px 30px 3px 3px;
+  background-color: var(--reading-paper);
+  background-image: var(--art-mesh-warm, none), linear-gradient(115deg, #fffaf457, #eee7dc26);
+  background-size: 210px 180px, 100% 100%;
+  background-position: right -90px top -116px, 0 0;
+  box-shadow: inset 3px 0 0 #6b879015;
+}
+#story .module-designed .story-eyebrow {
+  align-items: baseline;
+  gap: 6px 20px;
+  margin: 0 0 12px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+#story .module-designed .story-eyebrow .chapter-index {
+  padding-left: 10px;
+  border-left-width: 2px;
+  font: 11px/1.6 Consolas, 'Courier New', monospace;
+  letter-spacing: .075em;
+  color: #8c7969;
+}
+#story .module-designed .story-title {
+  max-width: 24em;
+  margin: 0;
+  font: 500 clamp(27px, 2.45vw, 36px)/1.3 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  letter-spacing: -.045em;
+  color: var(--reading-ink);
+}
+#story .module-designed .story-title-line { display: inline; }
+#story .module-designed .story-title-line + .story-title-line::before { content: ' '; }
+#story .module-designed .story-lead {
+  max-width: 42em;
+  margin: 12px 0 0;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--reading-muted);
+}
+#story .module-designed .story-plane { margin-top: 26px; }
+#story .module-designed .module-caption {
+  font: 12px/1.6 Consolas, 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  letter-spacing: .035em;
+  color: var(--reading-muted);
+}
+#story .module-designed :is(.module-note, .evidence-note, .motion-status, .remote-records-note) {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--reading-muted);
+}
+#story .module-designed .story-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 26px;
+  margin-top: 18px;
+}
+#story .module-designed .story-link {
+  min-height: 44px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+#story .module-designed :is(button, summary, input, textarea):focus-visible {
+  outline: 2px solid #527981;
+  outline-offset: 4px;
+}
+#story .story-scroll-hint {
+  left: 22%;
+  bottom: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #91816e;
+}
+
+/* 次级入口像一条有节点的接缝，点击位置保持稳定，展开不另加演出时钟。 */
+#story .module-designed .chapter-more {
+  margin-top: 22px;
+  border-top: 1px solid #c9bdaa80;
+  padding-top: 7px;
+}
+#story .module-designed .chapter-more > summary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+  min-height: 44px;
+  margin: 0;
+  padding: 8px 22px 8px 0;
+  color: #6c6256;
+  font-size: 14px;
+  line-height: 1.6;
+  list-style: none;
+  cursor: pointer;
+}
+#story .chapter-more > summary::-webkit-details-marker { display: none; }
+#story .chapter-more > summary::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  border: 1px solid #8a9d9f;
+  border-radius: 50%;
+  background: var(--reading-paper);
+}
+#story .chapter-more > summary::after {
+  content: '+';
+  position: absolute;
+  right: 0;
+  color: #a77b60;
+  font: 20px/1 Consolas, monospace;
+}
+#story .chapter-more[open] > summary::before { background: var(--reading-cool); }
+#story .chapter-more[open] > summary::after { content: '−'; }
+#story .chapter-more[open] > summary { color: #3f5e63; }
+#story .chapter-more-body { padding: 14px 0 8px; }
+#story .chapter-more-body > p {
+  margin: 12px 0;
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--reading-muted);
+}
+#story .chapter-more .compact-questions > button {
+  min-height: 56px;
+  gap: 14px;
+  padding-block: 12px;
+  grid-template-columns: 22px minmax(0, 1fr) 18px;
+}
+#story .chapter-more .compact-questions strong { font-size: 15px; line-height: 1.65; }
+#story .chapter-more .compact-questions button > span:first-child { font-size: 12px; }
+
+/* 旧物本身是主图，轮廓与实际磨痕对应“描述／核对”的区别。 */
+#story .object-study {
+  --object-paper: #f6f0e5;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 18px 42px;
+  border-block: 1px solid #c9bdaa80;
+  padding: 16px 0 12px;
+}
+#story .object-illustration {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  margin: 0;
+  padding: 0 4px;
+  min-width: 0;
+  color: #66828a;
+}
+#story .camera-drawing { display: block; width: min(100%, 340px); height: auto; }
+#story .camera-scuff { opacity: 0; transition: opacity 220ms ease-out; }
+#story .object-study[data-revealed='true'] .camera-scuff { opacity: 1; }
+#story .object-illustration figcaption {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #5e7679;
+}
+#story .object-illustration figcaption span { font-size: 12px; color: #9b8c7b; }
+#story .object-observation { min-width: 0; border-left: 1px solid #c9bdaa80; padding-left: 28px; }
+#story .object-observation .module-caption { color: #97846f; }
+#story .object-description p {
+  margin: 9px 0 0;
+  font-size: clamp(19px, 1.7vw, 23px);
+  line-height: 1.65;
+  color: var(--reading-ink);
+}
+#story .object-truth { border-top: 1px dashed #c9bdaa; padding-top: 14px; margin-top: 16px; }
+#story .object-truth p { min-height: 3.6em; margin: 7px 0 0; font-size: 14px; line-height: 1.8; color: #8d8174; }
+#story .object-study[data-revealed='true'] .object-truth p { color: #9d563f; }
+#story .object-reveal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  min-height: 46px;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #9cafa9;
+  border-radius: 2px 17px 2px 2px;
+  background: #e9eee7;
+  color: #3e626a;
+  font: 14px/1.6 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  cursor: pointer;
+}
+#story .object-reveal[aria-pressed='true'] { border-color: #c88d75; background: #f3e8dd; color: #935940; }
+#story .object-study-note {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding-top: 4px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #8d8071;
+}
+
+/* 同一段对话保留足够的呼吸空间，两个选择共享基线而拥有相反边角。 */
+#story .module-system .visual-lab { display: block; padding: 0; border: 0; background: none; }
+#story .module-system .lab-preview {
+  max-width: 640px;
+  min-height: 0;
+  margin: 0 auto;
+  padding: 18px 24px;
+  border: 1px solid #b7c4be;
+  border-radius: 23px 23px 5px 5px;
+  background: var(--lab-background);
+  box-shadow: 0 4px 0 #6b879007, inset 0 0 0 4px #ffffff30;
+}
+#story .module-system .lab-contact {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 0;
+  padding: 0 0 12px;
+  border-bottom: 1px solid #b5c2b840;
+  font: 15px/1.5 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  letter-spacing: 0;
+}
+#story .module-system .lab-contact::before { content: none; }
+#story .lab-avatar { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #cf765c80; border-radius: 50%; color: #b96d53; }
+#story .module-system .lab-contact small { display: block; margin-top: 2px; font-size: 12px; font-weight: 400; color: #8c8072; }
+#story .lab-contact-orbit { margin-left: auto; font-size: 25px; color: #7a9295; }
+#story .lab-conversation { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 14px 0; }
+#story .lab-time { align-self: center; font: 12px/1.5 Consolas, 'Microsoft YaHei', monospace; color: #9c8d7c; }
+#story .module-system .lab-bubble {
+  max-width: 87%;
+  padding: 12px 15px;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.75;
+  border-radius: 2px var(--lab-radius) var(--lab-radius) var(--lab-radius);
+}
+#story .lab-reply { align-self: flex-end; max-width: 85%; margin: 0; padding: 11px 15px; border: 1px solid #6b879050; border-right: 2px solid #6b8790; border-radius: 16px 2px 16px 16px; background: #6b879009; font-size: 15px; line-height: 1.7; }
+#story .lab-connection { display: block; position: relative; align-self: center; width: 68px; height: 22px; margin-top: 1px; }
+#story .lab-connection::before { position: absolute; top: 11px; left: 11px; right: 11px; border-top: 1px solid #b5b1a0; content: ''; }
+#story .lab-connection i { position: absolute; top: 0; left: 0; width: 23px; height: 23px; border: 1px solid #cf765c80; border-radius: 50%; background: #cf765c0b; }
+#story .lab-connection i + i { left: auto; right: 0; border-color: #6b879080; background: #6b87900b; }
+#story .module-system .lab-caption { min-height: 1.8em; margin: 0; font-size: 12px; line-height: 1.8; text-align: center; }
+#story .module-system .lab-presets { display: grid; grid-template-columns: 1fr 1fr; max-width: 640px; margin: 14px auto 0; gap: 10px; }
+#story .module-system .lab-presets button { min-height: 46px; padding: 9px 14px; border: 1px solid #b8bcae; border-radius: 18px 3px 3px 3px; background: #f4f0e6; color: #5f6a62; font-size: 14px; line-height: 1.5; }
+#story .module-system .lab-presets button + button { border-radius: 3px 18px 3px 3px; }
+#story .module-system .lab-presets button[aria-pressed='true'] { border-color: #54747a; background: #354e53; color: #fffaf0; box-shadow: inset 0 -2px 0 #cf765c; }
+#story .module-system .visual-lab > .evidence-note { margin: 12px 0 0; text-align: center; font-size: 12px; }
+#story .module-system .visual-specimens { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin: 20px 0; padding-bottom: 20px; }
+#story .module-system .visual-specimens :is(.specimen-message, strong) { font-size: 15px; line-height: 1.7; }
+#story .module-system .visual-specimens small { font-size: 12px; line-height: 1.7; }
+#story .module-system .lab-controls { gap: 20px; margin-top: 20px; }
+#story .module-system .lab-controls label { font-size: 14px; line-height: 1.7; }
+#story .module-system .lab-controls input { min-height: 44px; }
+
+/* 动作窗口保留原画布与姿势，页签以小型轨道刻度表达先后。 */
+#story .module-motion .motion-study { min-height: 0; height: clamp(215px, 30svh, 310px); border: 1px solid #b6c0b660; border-radius: 2px 26px 2px 2px; background: #efe9df80; box-shadow: inset 0 -3px 0 #6b87900b; }
+#story .module-motion #motionStudyCanvas { display: block; width: 100%; height: 100%; }
+#story .module-motion .motion-phases { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin-top: 14px; padding: 0; border-bottom: 1px solid #b8b8a8; }
+#story .module-motion .motion-phases button { position: relative; min-height: 48px; padding: 8px 10px; border: 0; border-radius: 0; background: transparent; box-shadow: none; color: #807567; font-size: 14px; line-height: 1.6; }
+#story .module-motion .motion-phases button[aria-pressed='true'] { background: #6b879010; color: #385c63; box-shadow: inset 0 -2px 0 #6b8790; }
+#story .module-motion .motion-phases .ui-art-icon { display: none; }
+#story .module-motion .motion-status { min-height: 1.8em; margin-top: 10px; }
+#story .module-motion .motion-poses { margin-top: 6px; padding-top: 14px; gap: 22px; }
+#story .module-motion .motion-poses strong { font-size: 15px; }
+#story .module-motion .motion-poses p { font-size: 13px; line-height: 1.8; }
+
+/* 路径经过四种操作物件，形态来自物品、对话、分叉和凭据，不套同一种卡片。 */
+#story .trade-path { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; padding: 16px 0 10px; }
+#story .trade-step { display: grid; position: relative; align-content: start; justify-items: start; gap: 7px; min-width: 0; min-height: 190px; padding: 12px 16px 16px; border: 0; border-bottom: 1px solid #c9bdaa; border-radius: 0; background: transparent; text-align: left; color: var(--reading-ink); cursor: pointer; }
+#story .trade-step + .trade-step { border-left: 1px solid #c9bdaa60; }
+#story .trade-step::after { position: absolute; right: -5px; top: 47px; color: #b78f73; font-size: 18px; content: '›'; }
+#story .trade-step:last-child::after { content: none; }
+#story .trade-step strong { font-size: 18px; line-height: 1.5; font-weight: 500; }
+#story .trade-step small { font-size: 13px; line-height: 1.65; color: #8a7c6c; }
+#story .trade-step .module-caption { font-size: 11px; letter-spacing: .06em; }
+#story .trade-symbol { position: relative; display: block; width: 56px; height: 48px; margin-bottom: 13px; color: #6b8790; }
+#story .trade-symbol i { position: absolute; display: block; }
+#story .trade-symbol-object i { inset: 8px 12px 4px 4px; border: 1.5px solid #6b8790; border-radius: 2px; transform: rotate(-8deg); background: #6b87900b; }
+#story .trade-symbol-object i + i { inset: 3px 5px 9px 11px; border-color: #cf765c; transform: rotate(7deg); background: #f6eee2; }
+#story .trade-symbol-message i { inset: 7px 5px 10px 0; border: 1.5px solid #cf765c; border-radius: 2px 13px 13px 13px; background: #cf765c08; }
+#story .trade-symbol-message i + i { inset: 17px 15px 20px 10px; border: 0; border-top: 1px solid #cf765c; border-bottom: 1px solid #cf765c; border-radius: 0; background: none; }
+#story .trade-symbol-choice::before { content: ''; position: absolute; left: 25px; top: 9px; width: 1px; height: 34px; background: #a69c8c; transform: rotate(40deg); }
+#story .trade-symbol-choice i { left: 4px; top: 24px; width: 15px; height: 15px; border: 1.5px solid #6b8790; border-radius: 50%; background: #f6eee2; }
+#story .trade-symbol-choice i + i { left: 35px; top: 3px; border-color: #cf765c; border-radius: 2px; }
+#story .trade-symbol-receipt i { inset: 2px 12px 0 7px; border: 1.5px solid #6b8790; border-bottom-style: dashed; border-radius: 2px 12px 0 0; background: #6b87900b; }
+#story .trade-symbol-receipt i + i { inset: 16px 19px 17px 15px; border: 0; border-top: 1px solid #6b8790; border-bottom: 1px solid #6b8790; border-radius: 0; background: transparent; }
+#story .trade-loop { display: grid; grid-template-columns: auto minmax(60px, 130px) auto; align-items: center; justify-content: center; gap: 8px 18px; max-width: 420px; margin: 18px auto 0; }
+#story .trade-loop > span { font-size: 13px; color: #8f7762; }
+#story .trade-loop > span:nth-of-type(2) { color: #5b7b83; }
+#story .trade-loop > div { display: flex; position: relative; align-items: center; justify-content: space-between; height: 24px; }
+#story .trade-loop > div::before { position: absolute; left: 0; right: 0; top: 50%; border-top: 1px solid #b4b8ac; content: ''; }
+#story .trade-loop i { position: relative; width: 9px; height: 9px; border: 1px solid #cf765c; border-radius: 50%; background: var(--reading-paper); }
+#story .trade-loop i:nth-child(even) { border-color: #6b8790; transform: translateY(5px); }
+#story .trade-loop i:nth-child(odd) { transform: translateY(-5px); }
+#story .trade-loop p { grid-column: 1 / -1; margin: 0; text-align: center; font-size: 13px; line-height: 1.7; color: #8e7c6b; }
+
+/* 前后对照是信息结构示意，线与面分别呈现密集并列和清晰主从。 */
+#story .design-proof { display: grid; grid-template-columns: 1fr 1fr; gap: 38px; }
+#story .proof-panel { position: relative; min-width: 0; padding: 16px 0; border-top: 1px solid #c9bdaa; }
+#story .proof-panel.after { border-top-color: #8da7a8; }
+#story .proof-panel.before::after { content: '→'; position: absolute; right: -28px; top: 120px; color: #b08d73; font-size: 20px; }
+#story .proof-drawing { position: relative; height: 160px; margin: 16px 0 18px; padding: 16px; border: 1px solid #c7bca960; border-radius: 2px 16px 2px 2px; background: #fffaf035; }
+#story .proof-lines { display: grid; grid-template-columns: 1fr 1fr 1fr; align-content: center; gap: 12px; }
+#story .proof-lines i { display: block; height: 25px; border-block: 1px solid #b9a48f; background: repeating-linear-gradient(0deg, transparent 0 5px, #c9b6a340 5px 6px); }
+#story .proof-lines i:nth-child(3n + 1) { border-top-width: 3px; }
+#story .proof-hierarchy { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 15px; gap: 14px 8px; }
+#story .proof-hierarchy i:first-child { display: block; grid-column: 1 / -1; position: relative; border: 1px solid #8aa5a2; border-radius: 2px 18px 2px 2px; background: #6b87900b; }
+#story .proof-hierarchy i:first-child::before, #story .proof-hierarchy i:first-child::after { content: ''; position: absolute; width: 42px; height: 42px; top: 50%; left: calc(50% - 35px); margin-top: -21px; border: 1px solid #cf765c80; border-radius: 50%; }
+#story .proof-hierarchy i:first-child::after { left: calc(50% - 7px); border-color: #6b879080; }
+#story .proof-hierarchy i + i { border-bottom: 1px solid #b0b8a9; }
+#story .proof-hierarchy i:last-child { width: 60%; justify-self: end; }
+#story .proof-panel p { margin: 0; font-size: 14px; line-height: 1.8; color: #827263; }
+#story .module-process .proof-note { margin: 12px 0 0; }
+#story .chapter-more .design-decisions > div { display: block; padding: 14px 0; border-bottom: 1px solid #c9bdaa60; }
+#story .chapter-more .design-decisions h3 { font-size: 16px; line-height: 1.6; margin: 0 0 6px; }
+#story .chapter-more .design-decisions p { font-size: 14px; line-height: 1.8; margin: 0; }
+#story .implementation-ledger { margin-top: 18px; padding-top: 18px; }
+#story .implementation-ledger strong { font-size: 14px; }
+#story .implementation-ledger p { font-size: 13px; line-height: 1.8; }
+
+/* 反馈先留下感受与一句话，统计作为次级材料。 */
+#story .feedback-form { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 0; padding: 0; border: 0; }
+#story .feedback-form fieldset { grid-column: 1; grid-row: auto; display: flex; flex-wrap: wrap; gap: 8px 10px; }
+#story .feedback-form legend { margin-bottom: 12px; font-size: 15px; font-weight: 400; line-height: 1.7; }
+#story .feedback-form fieldset label { flex: 1 1 140px; min-height: 48px; padding: 10px 13px; border: 1px solid #b8bba9; border-radius: 18px 3px 3px 18px; background: #f9f5eb; font-size: 14px; }
+#story .feedback-form fieldset label:nth-of-type(2) { border-radius: 3px; }
+#story .feedback-form fieldset label:nth-of-type(3) { border-radius: 3px 18px 18px 3px; }
+#story .feedback-form fieldset label:has(input:checked) { border-color: #6b8790; padding-left: 13px; background: #e5ebe4; color: #3b5c62; }
+#story .feedback-form > label { grid-column: 1; display: block; font-size: 14px; line-height: 1.7; }
+#story .feedback-form textarea { min-height: 105px; margin-top: 9px; padding: 13px 15px; font-size: 15px; line-height: 1.75; border: 1px solid #b8bba9; border-left: 2px solid #6b8790; border-radius: 2px 20px 2px 2px; background-color: #fcf8ef; }
+#story .feedback-form textarea::placeholder { color: #9a8c7d; }
+#story .feedback-form .feedback-notice { margin: -3px 0 0; font-size: 12px; line-height: 1.7; color: #8b7b6a; }
+#story .feedback-submit { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+#story .feedback-form button[type='submit'] { min-height: 48px; padding: 11px 22px; border-radius: 2px 19px 2px 2px; font-size: 14px; }
+#story .feedback-form output { flex: 1 1 150px; font-size: 13px; line-height: 1.7; }
+#story .module-feedback .remote-records-note { margin: 12px 0 0; }
+#story .chapter-more .evidence-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+#story .chapter-more .evidence-value { font-size: 30px; }
+#story .chapter-more .evidence-grid span { font-size: 12px; line-height: 1.7; }
+#story .chapter-more .feedback-list { max-height: none; overflow: visible; }
+#story .chapter-more .feedback-list > p { font-size: 14px; line-height: 1.8; }
+
+/* 触控命中范围与排版固定，只让边界和表面反馈状态；快速反向操作可直接收束。 */
+@media (hover: hover) {
+  #story .object-reveal:hover { border-color: #64878b; background-color: #e1e9e1; }
+  #story .trade-step:hover { background-color: #6b879008; color: #42636a; }
+  #story .chapter-more > summary:hover { color: #43666b; }
+  #story .module-system .lab-presets button:not([aria-pressed='true']):hover { background-color: #e9ece2; }
+  #story .module-motion .motion-phases button:not([aria-pressed='true']):hover { color: #486b72; background-color: #6b879008; }
+}
+#story :is(.object-reveal, .trade-step) { transition: background-color 180ms ease-out, border-color 180ms ease-out, color 140ms ease-out; }
+#story :is(.object-reveal, .trade-step):active { background-color: #dce5dc; transition-duration: 0ms; }
+
+@media (max-width: 1000px) {
+  #story .story-chapter .story-content.module-designed { width: 77%; margin-left: 19%; padding: 24px 28px; }
+  #story .story-scroll-hint { left: 19%; }
+  #story .object-study { gap: 18px 24px; }
+  #story .object-observation { padding-left: 22px; }
+  #story .trade-step { padding-inline: 12px; }
+  #story .trade-step strong { font-size: 16px; }
+}
+
+@media (max-width: 640px) {
+  #story .story-chapter .story-content.module-designed {
+    width: calc(100% - 42px);
+    margin-left: 34px;
+    max-height: calc(var(--story-viewport-height, 100svh) - var(--reader-top, 0px) - 48px);
+    padding: 18px 14px;
+  }
+  #story .module-designed::before { border-top-right-radius: 20px; background-size: 150px 130px, 100% 100%; background-position: right -83px top -87px, 0 0; }
+  #story .module-designed .story-eyebrow { display: flex; flex-wrap: wrap; align-items: baseline; margin-bottom: 13px; gap: 6px 14px; }
+  #story .module-designed .story-eyebrow span { display: inline; margin: 0; font-size: 12px; }
+  #story .module-designed .story-eyebrow .chapter-index { font-size: 10px; padding-left: 8px; letter-spacing: .045em; }
+  #story .module-designed .story-title { font-size: clamp(25px, 6.8vw, 31px); line-height: 1.35; letter-spacing: -.04em; }
+  #story .module-designed .story-title-line { display: block; }
+  #story .module-designed .story-title-line + .story-title-line::before { content: none; }
+  #story .module-designed .story-lead { font-size: 14px; line-height: 1.8; margin-top: 11px; }
+  #story .module-designed .story-plane { margin-top: 20px; }
+  #story .module-designed .chapter-more { margin-top: 20px; }
+  #story .module-designed .chapter-more > summary { font-size: 13px; }
+  #story .story-scroll-hint { left: 38px; max-width: calc(100% - 52px); font-size: 12px; }
+  #story .object-study { grid-template-columns: 1fr; gap: 16px; padding-top: 6px; }
+  #story .camera-drawing { width: min(100%, 245px); max-height: 165px; }
+  #story .object-illustration figcaption { font-size: 13px; }
+  #story .object-observation { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; padding: 0; border: 0; }
+  #story .object-description p { font-size: 17px; line-height: 1.65; margin-top: 7px; }
+  #story .object-truth { margin: 0; padding: 0 0 0 13px; border-top: 0; border-left: 1px dashed #c9bdaa; }
+  #story .object-truth p { font-size: 13px; min-height: 5.2em; }
+  #story .object-reveal { grid-column: 1 / -1; min-height: 46px; font-size: 14px; }
+  #story .object-study-note { padding-top: 0; font-size: 12px; }
+  #story .module-system .lab-preview { padding: 15px 13px; border-top-left-radius: 19px; border-top-right-radius: 19px; }
+  #story .module-system .lab-contact { padding-bottom: 10px; }
+  #story .lab-conversation { padding-block: 12px; gap: 13px; }
+  #story .module-system .lab-bubble { max-width: 94%; padding: 11px 12px; font-size: 15px; line-height: 1.7; }
+  #story .lab-reply { padding: 9px 12px; font-size: 14px; }
+  #story .module-system .lab-presets { gap: 8px; }
+  #story .module-system .lab-presets button { padding-inline: 6px; font-size: 13px; }
+  #story .module-system .visual-lab > .evidence-note { font-size: 12px; text-align: left; }
+  #story .module-system .visual-specimens { grid-template-columns: 1fr; gap: 20px; }
+  #story .module-system .lab-controls { grid-template-columns: 1fr; }
+  #story .module-motion .motion-study { height: clamp(195px, 30svh, 265px); }
+  #story .module-motion .motion-phases { grid-template-columns: 1fr 1fr; gap: 4px 10px; border-bottom: 0; }
+  #story .module-motion .motion-phases button { min-height: 44px; padding: 7px 4px; border-bottom: 1px solid #c9bdaa; font-size: 13px; }
+  #story .module-motion .motion-poses { grid-template-columns: 1fr; gap: 20px; }
+  #story .module-motion .motion-poses > div { display: grid; grid-template-columns: 52px 1fr; padding: 0; gap: 4px 12px; }
+  #story .module-motion .motion-poses .pose-symbol { grid-row: 1 / 3; height: 36px; }
+  #story .module-motion .motion-poses p { margin: 0; grid-column: 2; font-size: 13px; }
+  #story .trade-path { grid-template-columns: 1fr 1fr; gap: 4px 12px; padding: 4px 0; }
+  #story .trade-step { padding: 12px 8px 14px; min-height: 160px; gap: 6px; }
+  #story .trade-step:nth-child(odd) { border-left: 0; }
+  #story .trade-step:nth-child(even)::after { content: none; }
+  #story .trade-step .module-caption { font-size: 10px; }
+  #story .trade-step strong { font-size: 16px; }
+  #story .trade-step small { font-size: 12px; line-height: 1.7; }
+  #story .trade-symbol { margin-bottom: 5px; }
+  #story .trade-loop { gap: 7px 13px; margin-top: 16px; }
+  #story .design-proof { gap: 18px; }
+  #story .proof-panel { padding-block: 12px; }
+  #story .proof-panel .module-caption { font-size: 12px; line-height: 1.7; }
+  #story .proof-panel.before::after { right: -16px; top: 120px; font-size: 16px; }
+  #story .proof-drawing { height: 130px; padding: 10px; margin: 13px 0; }
+  #story .proof-lines { gap: 7px; }
+  #story .proof-lines i { height: 23px; }
+  #story .proof-hierarchy { gap: 9px 5px; }
+  #story .proof-hierarchy i:first-child::before, #story .proof-hierarchy i:first-child::after { width: 30px; height: 30px; margin-top: -15px; left: calc(50% - 24px); }
+  #story .proof-hierarchy i:first-child::after { left: calc(50% - 5px); }
+  #story .proof-panel p { font-size: 13px; line-height: 1.8; }
+  #story .implementation-ledger { grid-template-columns: 1fr; gap: 18px; }
+  #story .feedback-form { gap: 15px; }
+  #story .feedback-form legend { font-size: 14px; }
+  #story .feedback-form fieldset { gap: 8px; }
+  #story .feedback-form fieldset label { flex-basis: 100%; min-height: 44px; border-radius: 3px 16px 3px 3px; }
+  #story .feedback-form textarea { min-height: 112px; font-size: 16px; }
+  #story .feedback-form button[type='submit'] { min-height: 48px; }
+  #story .chapter-more .evidence-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
+}
+
+@media (min-width: 641px) and (max-height: 780px) {
+  #story .story-chapter .story-content.module-designed { padding-top: 20px; padding-bottom: 20px; }
+  #story .module-designed .story-plane { margin-top: 18px; }
+  #story .module-designed .story-title { font-size: 29px; }
+  #story .module-designed .chapter-more { margin-top: 16px; }
+  #story .module-system .lab-preview { padding: 10px 20px; }
+  #story .module-system .lab-contact { padding-bottom: 8px; }
+  #story .lab-conversation { padding-block: 5px; gap: 5px; }
+  #story .module-system .lab-bubble { padding-block: 10px; }
+  #story .module-system .lab-caption { margin-top: 0; }
+  #story .module-system .lab-connection { height: 18px; }
+  #story .module-system .lab-connection i { width: 20px; height: 20px; top: -1px; }
+  #story .module-system .lab-connection::before { top: 9px; }
+  #story .module-system .lab-presets { margin-top: 10px; }
+  #story .module-system .visual-lab > .evidence-note { margin-top: 8px; }
+  #story .module-system .chapter-more { margin-top: 12px; }
+  #story .module-motion .motion-study { height: 205px; }
+  #story .proof-drawing { height: 140px; }
+}
+
+html.visual-paused #story .story-chapter .story-content.module-designed {
+  height: auto;
+  max-height: none;
+  overflow: visible;
+}
+html.visual-paused #story :is(.object-reveal, .trade-step, .camera-scuff) { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  #story .story-chapter .story-content.module-designed { height: auto; max-height: none; overflow: visible; }
+  #story :is(.object-reveal, .trade-step, .camera-scuff) { transition: none; }
+}
+
+/* 手机长叙事保留随手可达的首页与章节入口，避免导航随顶栏滑走。 */
+.mobile-shortcuts { display: none; }
+.mobile-shortcuts[hidden] { display: none !important; }
+@media (max-width: 640px) {
+  .mobile-shortcuts { position: fixed; z-index: 65; right: 12px; bottom: calc(10px + env(safe-area-inset-bottom)); display: flex; align-items: stretch; gap: 0; padding: 3px; border: 1px solid #aebbb6; border-radius: 22px 7px 20px 7px; background: #f8f3e9f5; box-shadow: 0 4px 18px #2d292514; color: #3f5e63; }
+  .mobile-shortcuts > button, .mobile-shortcuts summary { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; padding: 9px 14px; border: 0; border-radius: 18px 5px 16px 5px; background: transparent; color: inherit; font: 14px/1.5 'Microsoft YaHei', sans-serif; cursor: pointer; }
+  .mobile-shortcuts > button { border-right: 1px solid #c9bdaa80; }
+  .mobile-shortcuts summary { list-style: none; }
+  .mobile-shortcuts summary::-webkit-details-marker { display: none; }
+  .mobile-chapter-menu nav { position: absolute; right: 0; bottom: calc(100% + 9px); width: 218px; max-height: min(65svh, 380px); overflow-y: auto; padding: 8px; border: 1px solid #aebbb6; border-radius: 3px 22px 3px 3px; background: #f8f3e9; box-shadow: 0 8px 30px #2d29251a; }
+  .mobile-chapter-menu nav button { display: block; width: 100%; min-height: 44px; padding: 10px 14px; text-align: left; font: 14px/1.5 'Microsoft YaHei', sans-serif; border: 0; border-bottom: 1px solid #c9bdaa60; border-radius: 0; background: transparent; color: #5e655f; }
+  .mobile-chapter-menu nav button[aria-current] { color: #344e54; border-left: 2px solid #cf765c; background: #6b879010; }
+  .mobile-shortcuts :is(button, summary):focus-visible { outline: 2px solid #527981; outline-offset: 2px; }
+  #story .story-scroll-hint { bottom: calc(66px + env(safe-area-inset-bottom)); }
+  #story .story-chapter .story-content.module-designed { max-height: calc(var(--story-viewport-height, 100svh) - var(--reader-top, 0px) - 98px); }
+  .story-scene { padding-bottom: 44px; }
+  html.visual-paused #story .story-chapter .story-content.module-designed { max-height: none; }
+}
+html:is(.intro-running,.is-playing-match,.is-preparing-match) .mobile-shortcuts { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  #story .story-chapter .story-content.module-designed { max-height: none; }
+}

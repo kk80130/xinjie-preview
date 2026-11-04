@@ -3,31 +3,31 @@
   const root = document.documentElement;
   // 变体按信息用途和动作次序分配，不随机改变操作的含义。
   const cues = {
-    tick: { clips: ["cursor-2", "cursor-4"], gain: .3, priority: 1 },
-    navigation: { clips: ["cursor-1"], gain: .3, priority: 2 },
-    palette: { clips: ["cursor-4"], gain: .3, priority: 2 },
-    pose: { clips: ["cursor-3"], gain: .28, priority: 2 },
-    "card-prepare": { clips: ["cursor-2"], gain: .22, priority: 2 },
-    confirm: { clips: ["select-1"], gain: .53, priority: 3 },
-    ack: { clips: ["select-2"], gain: .5, priority: 4 },
-    settle: { clips: ["select-2"], gain: .6, priority: 5 },
-    card: { clips: ["swipe-1"], gain: .4, priority: 4, tempo: true },
-    message: { clips: ["cursor-5"], gain: .33, priority: 2 },
-    open: { clips: ["open"], gain: .42, priority: 3 },
-    back: { clips: ["cancel-1"], gain: .4, priority: 3 },
-    close: { clips: ["close"], gain: .4, priority: 3 },
-    pause: { clips: ["cancel-2"], gain: .32, priority: 3 },
-    error: { clips: ["error"], gain: .44, priority: 5 },
-    "response-land": { clips: ["cursor-3", "cursor-4"], gain: .16, priority: 1 },
-    "motion-prepare": { clips: ["cancel-1"], gain: .19, priority: 1 },
-    "motion-pull": { clips: ["swipe-1"], gain: .3, priority: 2, tempo: true },
-    "motion-land": { clips: ["cursor-3"], gain: .29, priority: 2 },
-    "motion-follow": { clips: ["cursor-5"], gain: .13, priority: 1 },
-    "motion-settle": { clips: ["close"], gain: .24, priority: 1 },
-    "scroll-enter": { clips: ["swipe-1"], gain: .26, priority: 1, scroll: true, tempo: true },
-    "scroll-expand": { clips: ["cursor-2", "cursor-3", "cursor-4"], gain: .28, priority: 1, scroll: true },
-    "scroll-retract": { clips: ["swipe-2"], gain: .22, priority: 1, scroll: true, tempo: true },
-    "scroll-leave": { clips: ["cancel-1"], gain: .27, priority: 1, scroll: true }
+    tick: { clips: ["key-light", "key-dry"], gain: .18, priority: 1 },
+    navigation: { clips: ["ui-step"], gain: .2, priority: 2 },
+    palette: { clips: ["tap-soft"], gain: .2, priority: 2 },
+    pose: { clips: ["tap-soft"], gain: .18, priority: 2 },
+    "card-prepare": { clips: ["key-body"], gain: .2, priority: 2 },
+    confirm: { clips: ["ui-press"], gain: .32, priority: 3 },
+    ack: { clips: ["ui-confirm"], gain: .34, priority: 4 },
+    settle: { clips: ["ui-notice"], gain: .42, priority: 5 },
+    card: { clips: ["paper-swipe"], gain: .28, priority: 4, tempo: true },
+    message: { clips: ["message-soft", "ui-confirm"], gain: .28, priority: 2 },
+    open: { clips: ["ui-open"], gain: .26, priority: 3 },
+    back: { clips: ["ui-close"], gain: .22, priority: 3 },
+    close: { clips: ["ui-close"], gain: .21, priority: 3 },
+    pause: { clips: ["key-dry"], gain: .17, priority: 3 },
+    error: { clips: ["ui-error"], gain: .34, priority: 5 },
+    "response-land": { clips: ["tap-soft", "key-body"], gain: .12, priority: 1 },
+    "motion-prepare": { clips: ["brush-soft"], gain: .12, priority: 1 },
+    "motion-pull": { clips: ["ui-radiate", "ui-tap"], gain: .22, priority: 2, tempo: true },
+    "motion-land": { clips: ["ui-press"], gain: .24, priority: 2 },
+    "motion-follow": { clips: ["key-light"], gain: .1, priority: 1 },
+    "motion-settle": { clips: ["brush-soft"], gain: .17, priority: 1, tempo: true },
+    "scroll-enter": { clips: ["paper-swipe"], gain: .12, priority: 1, scroll: true, tempo: true },
+    "scroll-expand": { clips: ["key-light", "key-body", "key-dry"], gain: .12, priority: 1, scroll: true },
+    "scroll-retract": { clips: ["brush-soft"], gain: .1, priority: 1, scroll: true, tempo: true },
+    "scroll-leave": { clips: ["ui-close"], gain: .1, priority: 1, scroll: true }
   };
   let context = null, master = null, loading = null, ready = false;
   let loadFailed = false, unsupported = false, lastLoadAt = -Infinity, resumePending = null, wheelResumeAttempted = false;
@@ -38,6 +38,7 @@
   const clipNames = [...new Set(Object.values(cues).flatMap((cue) => cue.clips))];
   const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
   const now = () => performance.now();
+  const matchScope = (scope) => /^match(?:$|[-:])/.test(scope);
   const state = () => unsupported ? "unsupported" : document.hidden || pageDormant ? "paused" : loadFailed ? "error" : !ready ? "loading" : context?.state === "running" ? "on" : "waiting";
   function publishState() {
     root.dataset.audioState = state();
@@ -69,20 +70,29 @@
     for (const key of lastEvents.keys()) if (key.startsWith(`${scope}|`) || key.startsWith(`${scope}:`)) lastEvents.delete(key);
   }
   async function loadBank() {
-    const response = await fetch("assets/ui-sounds.bank?v=20261021-rhythm35");
+    const response = await fetch("assets/shapeforms-ui.bank?v=20261104-shapeforms");
     if (!response.ok) throw new Error("声音资源未载入");
     const data = await response.arrayBuffer();
     const bytes = new Uint8Array(data);
-    if (new TextDecoder().decode(bytes.subarray(0, 8)) !== "UIASFX01") throw new Error("声音资源格式不匹配");
+    if (bytes.length < 12 || new TextDecoder().decode(bytes.subarray(0, 8)) !== "UIASFX02") throw new Error("声音资源格式不匹配");
     const length = new DataView(data).getUint32(8, true), start = 12 + length;
     if (start > data.byteLength) throw new Error("声音资源不完整");
     const manifest = JSON.parse(new TextDecoder().decode(bytes.subarray(12, start)));
-    if (manifest.version !== 1) throw new Error("声音资源版本不匹配");
+    if (manifest.version !== 2 || manifest.library !== "Shapeforms Audio Free Sound Effects" || manifest.encoding !== "xorshift32-v1") throw new Error("声音资源版本不匹配");
     const decoded = await Promise.all(clipNames.map(async (name) => {
       const clip = manifest.clips[name];
       if (!clip || !Number.isInteger(clip.offset) || !Number.isInteger(clip.length) || clip.offset < 0 || clip.length < 44 || start + clip.offset + clip.length > data.byteLength) throw new Error("声音片段不完整");
       if (!Number.isFinite(clip.peakSeconds) || clip.peakSeconds < 0 || clip.peakSeconds > clip.durationSeconds) throw new Error("声音强调点无效");
-      return [name, await context.decodeAudioData(data.slice(start + clip.offset, start + clip.offset + clip.length)), clip.peakSeconds];
+      if (!Number.isFinite(clip.durationSeconds) || clip.durationSeconds <= 0 || !Number.isInteger(clip.maskSeed) || clip.maskSeed <= 0 || clip.maskSeed > 0xffffffff) throw new Error("声音片段元数据无效");
+      const packed = bytes.subarray(start + clip.offset, start + clip.offset + clip.length);
+      const wav = new Uint8Array(clip.length);
+      let seed = clip.maskSeed >>> 0;
+      // 每片独立还原，避免把散装WAV直接放入公开资源；该包装不承担安全加密用途。
+      for (let index = 0; index < packed.length; index++) {
+        seed ^= seed << 13; seed ^= seed >>> 17; seed ^= seed << 5; seed >>>= 0;
+        wav[index] = packed[index] ^ (seed & 255);
+      }
+      return [name, await context.decodeAudioData(wav.buffer), clip.peakSeconds];
     }));
     decoded.forEach(([name, buffer, peak]) => { buffers.set(name, buffer); clipPeaks.set(name, peak); });
     ready = true;
@@ -95,15 +105,22 @@
     const scope = detail.scope || (cue.scroll ? "scroll" : name);
     const eventKey = `${scope}|${name}`;
     if (at - (lastEvents.get(eventKey) ?? -Infinity) < (detail.cooldownMs ?? 70)) return false;
+    if (matchScope(scope)) {
+      if (name === "settle") {
+        // 同一结算批次里的消息、点击和结果只保留主落点，不叠成三层提示。
+        for (const voice of voices) if (matchScope(voice.scope)) stopVoice(voice);
+      } else if ([...voices].some((voice) => matchScope(voice.scope) && voice.name === "settle")) return false;
+    }
     if (cue.scroll) {
       const direction = detail.direction || 0;
       if (direction && lastDirection && direction !== lastDirection) stopAll(true);
       lastDirection = direction;
-      if (at - lastScrollAt < clamp(detail.intervalMs || 180, 100, 260)) return false;
+      if (at - lastScrollAt < clamp(detail.intervalMs || 380, 280, 480)) return false;
     }
     if (cue.priority > 1) stopAll(true);
     const count = variants.get(name) || 0;
-    const index = Number.isFinite(detail.variant) ? Math.abs(Math.trunc(detail.variant)) : count;
+    const selectedVariant = typeof detail.variant === "string" ? { incoming: 0, transaction: 1, enter: 0 }[detail.variant] : detail.variant;
+    const index = Number.isFinite(selectedVariant) ? Math.abs(Math.trunc(selectedVariant)) : count;
     const clip = cue.clips[index % cue.clips.length], buffer = buffers.get(clip);
     if (!buffer) return false;
     // 一帧跨过多项只保留当前声；高优先级操作可以替代仍在收束的滚动声。
@@ -119,15 +136,17 @@
     source.buffer = buffer; source.playbackRate.value = rate;
     // 用实测能量强调点对齐动作落点，而不是把文件起点机械对齐按钮点击。
     const accent = clamp(Number(detail.accentMs) || 0, 0, 600) / 1000;
-    const start = context.currentTime + Math.max(0, accent - clipPeaks.get(clip) / rate);
-    const duration = Math.min(buffer.duration / rate, detail.durationMs > 0 ? Math.max(.06, detail.durationMs / 1000 + .07) : Infinity);
+    const start = context.currentTime + Math.max(matchScope(scope) && cue.priority < 5 ? .012 : 0, accent - clipPeaks.get(clip) / rate);
+    // 短动作可以收尾，但不能在声音自身的强调点之前把片段截断。
+    const duration = Math.min(buffer.duration / rate, detail.durationMs > 0 ?
+      Math.max(.06, detail.durationMs / 1000 + .07, clipPeaks.get(clip) / rate + .035) : Infinity);
     const end = start + duration, level = cue.gain * clamp(detail.gain || 1, .45, 1.25);
     gain.gain.setValueAtTime(0, start);
     gain.gain.linearRampToValueAtTime(level, Math.min(end, start + .003));
     gain.gain.setValueAtTime(level, Math.max(start + .003, end - .016));
     gain.gain.linearRampToValueAtTime(0, end);
     source.connect(gain); gain.connect(master);
-    const voice = { source, gain, scope, priority: cue.priority, start, scroll: Boolean(cue.scroll), stopping: false };
+    const voice = { source, gain, name, scope, priority: cue.priority, start, scroll: Boolean(cue.scroll), stopping: false };
     voices.add(voice);
     source.onended = () => { voices.delete(voice); source.disconnect(); gain.disconnect(); };
     source.start(start); source.stop(end + .002);
@@ -159,7 +178,7 @@
       if (!context) {
         const Audio = window.AudioContext || window.webkitAudioContext;
         if (!Audio) { unsupported = true; publishState(); return; }
-        context = new Audio(); master = context.createGain(); master.gain.value = .7; master.connect(context.destination);
+        context = new Audio(); master = context.createGain(); master.gain.value = 1.2; master.connect(context.destination);
         context.addEventListener("statechange", publishState);
       }
     } catch { unsupported = true; publishState(); return; }
@@ -209,12 +228,31 @@
   });
   window.addEventListener("pagehide", () => { pageDormant = true; stopAll(); void reconcileContext(); });
   window.addEventListener("pageshow", () => { pageDormant = false; void reconcileContext(); });
+  let navigationAt = -Infinity, inlineScopeIndex = 0;
+  const inlineStates = new WeakMap(), inlineScopes = new WeakMap();
   document.addEventListener("click", (event) => {
-    const target = event.target.closest("[data-view-target],#motionToggle");
+    if (event.target.closest?.("[data-view-target]")) navigationAt = now();
+  }, { capture: true });
+  document.addEventListener("toggle", (event) => {
+    const detail = event.target;
+    if (!detail.matches?.("details.chapter-more, details.system-details, details.mobile-chapter-menu")) return;
+    const open = Boolean(detail.open), previous = inlineStates.get(detail) ?? false;
+    inlineStates.set(detail, open);
+    if (open === previous || !open && now() - navigationAt < 120) return;
+    let scope = inlineScopes.get(detail);
+    if (!scope) { scope = `inline:${++inlineScopeIndex}`; inlineScopes.set(detail, scope); }
+    cancel(scope);
+    play(open ? "open" : "close", { scope });
+  }, { capture: true });
+  document.addEventListener("click", (event) => {
+    const target = event.target.closest?.("[data-view-target],#motionToggle,[data-object-reveal]");
     if (!target || target.disabled) return;
     if (target.id === "motionToggle") {
       cancel("study"); cancel("scroll");
       play(document.documentElement.classList.contains("visual-paused") ? "pause" : "tick");
+    } else if (target.matches("[data-object-reveal]")) {
+      cancel("object-study");
+      play(target.getAttribute("aria-pressed") === "true" ? "open" : "close", { scope: "object-study" });
     } else play("navigation");
   });
   document.addEventListener("change", (event) => {
