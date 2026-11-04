@@ -70,7 +70,7 @@
     for (const key of lastEvents.keys()) if (key.startsWith(`${scope}|`) || key.startsWith(`${scope}:`)) lastEvents.delete(key);
   }
   async function loadBank() {
-    const response = await fetch("assets/shapeforms-ui.bank?v=20261104-shapeforms");
+    const response = await fetch("assets/release-20261104-r2/shapeforms-ui.bank");
     if (!response.ok) throw new Error("声音资源未载入");
     const data = await response.arrayBuffer();
     const bytes = new Uint8Array(data);

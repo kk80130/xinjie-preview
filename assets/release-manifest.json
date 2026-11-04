@@ -1,0 +1,212 @@
+{
+  "release": "20261104-r2",
+  "previousCommit": "30d6726cbc84b5ccfdba5cdf6a8f1a404c467e4f",
+  "runtimeDirectory": "assets/release-20261104-r2",
+  "files": [
+    {
+      "path": "index.html",
+      "bytes": 30237,
+      "sha256": "751b9c9e1946b4ad2874069744b13d23693774c11948e2a19f0b14ed6c24acd9"
+    },
+    {
+      "path": "assets/release-20261104-r2/styles.css",
+      "bytes": 34327,
+      "sha256": "f325b3f28f17d4aaf07a9fd22b3df430d24412d21a6f8e943472487c2a65919f"
+    },
+    {
+      "path": "assets/release-20261104-r2/visual.css",
+      "bytes": 19767,
+      "sha256": "6edeb46301c1fe2bf9997750861f559e441ab7f9468a2a9f6323617455e73e8a"
+    },
+    {
+      "path": "assets/release-20261104-r2/story.css",
+      "bytes": 16250,
+      "sha256": "1a8f2ac343fe8625f4ba27d611fa8bccb850cff917f9e5c004c1052c64d429f8"
+    },
+    {
+      "path": "assets/release-20261104-r2/route-cinematic.css",
+      "bytes": 3094,
+      "sha256": "a65b2e4e3b886aa671227723521b015c5d9854a7eb04246fbb3473903ef324a4"
+    },
+    {
+      "path": "assets/release-20261104-r2/scroll-timeline.css",
+      "bytes": 3446,
+      "sha256": "395097188d0dd128617ce3f32b1690cd07d5a65b0e27db9bb0e62c5466258edf"
+    },
+    {
+      "path": "assets/release-20261104-r2/ink-reading.css",
+      "bytes": 2199,
+      "sha256": "72930c9dd4c0661eaf4671128418bb2c89f21c2e4b95ef9364776faec68b0133"
+    },
+    {
+      "path": "assets/release-20261104-r2/reading-design.css",
+      "bytes": 8919,
+      "sha256": "60874cfb85e4bacc2d2d6db3a556fb6cb8571c55833fdfb8414dcdd51be55d7e"
+    },
+    {
+      "path": "assets/release-20261104-r2/narrative-scene.css",
+      "bytes": 13823,
+      "sha256": "48da2f31f806beeee2f495c3cf7f4eb696b25eb1461019737eab2abfec60f08f"
+    },
+    {
+      "path": "assets/release-20261104-r2/interaction-motion.css",
+      "bytes": 1842,
+      "sha256": "ac2ba2a8e8ac4f96b3cfd8905a2a93d3819050d5aed9e9a7689bd077606d556c"
+    },
+    {
+      "path": "assets/release-20261104-r2/modules-design.css",
+      "bytes": 9121,
+      "sha256": "4053fb6ffad374abc6e19e1cba16c8838288a71937171298509011eefd4f3095"
+    },
+    {
+      "path": "assets/release-20261104-r2/records-design.css",
+      "bytes": 2063,
+      "sha256": "2ba1666774b750636bd13c556c69d995bd83dced1357fa0acdcde5cf7266c0d9"
+    },
+    {
+      "path": "assets/release-20261104-r2/detail-explorer.css",
+      "bytes": 4354,
+      "sha256": "124a5d2dfd7406a8a3646d60adde79305f63c0fc6f850930cb391cb2b379a26a"
+    },
+    {
+      "path": "assets/release-20261104-r2/progress-rail.css",
+      "bytes": 1528,
+      "sha256": "50d700cd7c022ac78d958d173f9e90881dd494eba14faea894e538452c017c57"
+    },
+    {
+      "path": "assets/release-20261104-r2/art-direction.css",
+      "bytes": 54697,
+      "sha256": "7bca51d6d3d9767081b2f54b9bf5da8fe4e620b00efcd037084498a06c1700b6"
+    },
+    {
+      "path": "assets/release-20261104-r2/game-art.css",
+      "bytes": 15858,
+      "sha256": "1f760a780571bba844d06745aa5e53743f710045e958f9b1278ec0cbf1b3e90a"
+    },
+    {
+      "path": "assets/release-20261104-r2/chapter-art.css",
+      "bytes": 15653,
+      "sha256": "a14e1003422ed639b5d0bcdb4be08c930a2f41f8c8fe99f40abbeaf06db3f524"
+    },
+    {
+      "path": "assets/release-20261104-r2/match.css",
+      "bytes": 25657,
+      "sha256": "1e330867eb204b7674f56cbb344e06707cfb7572b98e5a9896b0a4b09150eb06"
+    },
+    {
+      "path": "assets/release-20261104-r2/site-audio.css",
+      "bytes": 355,
+      "sha256": "8a7874227fe8f062b12a4a8f5b006fddc8e066c8995f3130761f4cb2f1012ad0"
+    },
+    {
+      "path": "assets/release-20261104-r2/reading-composition.css",
+      "bytes": 30721,
+      "sha256": "7ccdc90fc6345742ae7f365832b5e45a09535b7c3e6af4bdc6eac4fa5ee351d2"
+    },
+    {
+      "path": "assets/release-20261104-r2/story-content.js",
+      "bytes": 27328,
+      "sha256": "cb3dd25b6706cec696f2a76ba534ee2708cfdae51a8d7be9cd0ece39413993b5"
+    },
+    {
+      "path": "assets/release-20261104-r2/records-client.js",
+      "bytes": 434,
+      "sha256": "39f148434e7f9f882f20ba7323016aacc8730cf6abd4144ca335f89c86a47085"
+    },
+    {
+      "path": "assets/release-20261104-r2/site-audio.js",
+      "bytes": 16110,
+      "sha256": "b1e4f50515565196a486945d456f44b8e9d0cc177ca1eac3f12e739c3d415826"
+    },
+    {
+      "path": "assets/release-20261104-r2/match-content.js",
+      "bytes": 16934,
+      "sha256": "808af624da41b5adf8117ebc557973dbcbe0fd435537ae7452160d5c958cf24b"
+    },
+    {
+      "path": "assets/release-20261104-r2/match-rules.js",
+      "bytes": 21285,
+      "sha256": "ff573319260da449b9187abdf8b689e43131202f7cb2745757028650872963fb"
+    },
+    {
+      "path": "assets/release-20261104-r2/app.js",
+      "bytes": 12018,
+      "sha256": "f411f71823643572f2dbce2f8e191f7f504fad6fd0172b4a7f9160b25e6a5662"
+    },
+    {
+      "path": "assets/release-20261104-r2/match-ui.js",
+      "bytes": 23534,
+      "sha256": "f5afc3f2b8937387115da19e6eef2f6c843aae7523646ac4b6c3b75e4aed9c0d"
+    },
+    {
+      "path": "assets/release-20261104-r2/visual.js",
+      "bytes": 20153,
+      "sha256": "6b979f0befc5a3f4458a061f4473cb023b0db14bf3f8577c2c37cb51133a510e"
+    },
+    {
+      "path": "assets/release-20261104-r2/intro.js",
+      "bytes": 9027,
+      "sha256": "b26ef26c4623e3bd789caa683e17d3c6e6c4abde7a189ba03896f67a85042c30"
+    },
+    {
+      "path": "assets/release-20261104-r2/ink-interactions.js",
+      "bytes": 1713,
+      "sha256": "fc0f53c014b818d564c757d8de4e16c8b4aa266f0d3a64fdd98bb07a5d14cee2"
+    },
+    {
+      "path": "assets/release-20261104-r2/narrative-scene.js",
+      "bytes": 10428,
+      "sha256": "a0fa14e86f89092cdc068f68f7dd52cae0edfb69ee34c5d35aac9f96d578dd70"
+    },
+    {
+      "path": "assets/release-20261104-r2/reading-input.js",
+      "bytes": 3004,
+      "sha256": "96f0086186b9c74dfe6e2794a3d7ea03a478b582d9e07a50c56c53f41bf917c0"
+    },
+    {
+      "path": "assets/release-20261104-r2/story.js",
+      "bytes": 45039,
+      "sha256": "428fe31fef33987f03e21bd4c2d67e221742e1387f115a138fdc7590abae4536"
+    },
+    {
+      "path": "assets/release-20261104-r2/interaction-motion.js",
+      "bytes": 4987,
+      "sha256": "0dadd0ec1571f8ddb795d60110aa11310f41253b0ac8b03819c606b5fce9c3d1"
+    },
+    {
+      "path": "assets/release-20261104-r2/detail-explorer.js",
+      "bytes": 8229,
+      "sha256": "8e2b413806284213403dbb9ab970f271db8a5e572e794af85460e897cafd1dae"
+    },
+    {
+      "path": "assets/release-20261104-r2/ui-art.js",
+      "bytes": 8425,
+      "sha256": "08c1e10fd3cfd2ae7ebe45dee6f93671bbc17c39c09cbb2ba55b259f554ed177"
+    },
+    {
+      "path": "assets/release-20261104-r2/chapter-interactions.js",
+      "bytes": 3195,
+      "sha256": "41a53c4ebac7d7c410a1bfce77dda378eb9ec37f77589fcc20cb741b44caf3ac"
+    },
+    {
+      "path": "assets/release-20261104-r2/shapeforms-ui.bank",
+      "bytes": 1335601,
+      "sha256": "844ed5b2349e908e286992884e069953b29c79ff4c50386592cffbfd3d5e118e"
+    },
+    {
+      "path": ".nojekyll",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "assets/UI-SOUND-SOURCES.md",
+      "bytes": 3332,
+      "sha256": "50ebfc454952885ae92c3cc1cbe2c46a68cf54cf07810c4f45265ba043bb4492"
+    },
+    {
+      "path": "README.md",
+      "bytes": 924,
+      "sha256": "0f46439d6e732dd361b0a5f61413f585d63c2d235d8b9c918e0780ac2e2126a0"
+    }
+  ]
+}
